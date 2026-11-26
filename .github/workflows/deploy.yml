@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -42,6 +43,24 @@ jobs:
         with:
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: public
+
+      # GitHub's artifact-list API can briefly lag behind upload completion.
+      # deploy-pages queries that API immediately, so explicitly wait for the exact run artifact.
+      - name: Wait for Pages artifact indexing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          for attempt in {1..15}; do
+            if gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" --jq '.artifacts[].name' | grep -Fxq "$ARTIFACT_NAME"; then
+              echo "Pages artifact is discoverable: $ARTIFACT_NAME"
+              exit 0
+            fi
+            echo "Pages artifact not indexed yet (attempt $attempt/15)"
+            sleep 3
+          done
+          echo "Pages artifact did not become discoverable."
+          exit 1
 
       - name: Deploy to GitHub Pages
         id: deployment

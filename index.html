@@ -43,6 +43,21 @@
     .trend-plot circle{transition:r .12s ease}.trend-plot circle:hover{r:7}
     @media(max-width:610px){.trend-controls{width:100%;justify-content:stretch}.trend-select{flex:1;max-width:none;min-width:135px}.trend-card{padding:13px}.trend-legend{gap:5px 10px}.trend-summary{font-size:11px}}
 
+
+    /* Clear trade-history overview: a small number of readable lines, all pairings available for focus. */
+    .trend-hint{margin:0 0 12px;color:#a8bed7;font-size:12px;line-height:1.55}
+    .trend-back:not([disabled]){background:#75532c;border-color:#e4b46c;color:#fff4db;box-shadow:0 0 0 1px #e4b46c3d inset}
+    .trend-back:not([disabled]):hover{background:#976a32}
+    .trend-back[disabled]{opacity:.60;cursor:default}
+    .trend-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:16px}
+    .trend-key{min-width:0;width:100%;display:flex;align-items:center;gap:10px;padding:9px 11px;background:#141f2f;border:1px solid #2e4058;border-radius:9px;opacity:.72}
+    .trend-key.plotted{background:#1b2b40;border-color:#4b6583;opacity:1}
+    .trend-key.active{border-color:#e5b465;background:#443625;color:#fff8ea;opacity:1}
+    .trend-key:hover{background:#2b3d56;color:white;opacity:1}
+    .trend-name{min-width:0;flex:1;font-size:11px;font-weight:650;line-height:1.4}
+    .trend-latest{flex-shrink:0;color:#e9f2ff;font-size:12px;font-variant-numeric:tabular-nums}
+    .trend-plot [data-trend-id]{cursor:pointer}
+    @media(max-width:720px){.trend-legend{grid-template-columns:1fr}.trend-key{padding:10px}.trend-controls{justify-content:flex-start}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
     .capture-actions{display:flex;gap:5px;align-items:center}.capture-mode{border:1px solid #394a60;background:#19283a;color:#d9e3f1;border-radius:9px;min-height:39px;padding:0 8px;font-size:12px;font-weight:650;max-width:116px;cursor:pointer}.capture-button{border-color:#9a7440;background:#493824;color:#ffe4b3}.capture-button:hover{background:#675035}.capture-mode:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -65,13 +80,15 @@
       <section class="section" id="chartSection"><div class="section-head"><h2>Trade Efficiency Ranking</h2><div class="section-sub" id="chartSub">All verified commander pairings · Highest to lowest</div></div><div class="chart-card"><div class="legend"><span class="positive">Positive (&gt;100%)</span><span class="negative">Negative (&lt;100%)</span></div><div id="chartRows"></div><div class="chart-axis" id="chartAxis"></div><div class="chart-foot">Dashed line = 100% break-even · Latest verified site snapshot</div></div></section>
       <section class="section" id="tradeTrendSection" aria-label="Trade history for the selected 7, 14 or 30 days">
         <div class="section-head"><h2 id="trendHeading">Trade Efficiency — Last 7 Days</h2><div class="trend-controls">
-          <button type="button" class="trend-back" id="trendBack" aria-label="Back to all commander pairings" hidden>← Back to all pairings</button>
+          <button type="button" class="trend-back" id="trendBack" aria-label="Back to all commander pairings" disabled>← Back to all pairings</button>
+          <label class="trend-guide" for="trendView">Overview</label><select class="trend-select" id="trendView" aria-label="Number of pairing lines to display"><option value="top5" selected>Top 5 (clear view)</option><option value="all">All pairings</option></select>
           <label class="trend-guide" for="trendPair">Pairing</label><select class="trend-select" id="trendPair" aria-label="Commander pairing in trade history"><option value="all">All pairings</option></select>
           <label class="trend-guide" for="trendDays">Compare</label><select class="trend-select" id="trendDays" aria-label="Trade history comparison period"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
           <label class="trend-guide" for="trendMetric">Show</label><select class="trend-select" id="trendMetric" aria-label="Trade history measurement"><option value="trade">Trade %</option><option value="delta">Change (Δ pp)</option></select>
         </div></div>
         <div class="trend-card">
           <div class="trend-summary" id="trendSummary" role="status">Loading the 7-day trade history from GitHub…</div>
+          <p class="trend-hint" id="trendHint">Top 5 overview · Choose a pairing below to zoom in; use Back to all pairings to return.</p>
           <div class="trend-scroller" id="trendGraphic"><div class="empty">Loading recorded site snapshots…</div></div>
           <div class="trend-legend" id="trendLegend"></div>
           <p class="trend-foot" id="trendFoot">7-day rolling window · 7-day Open Field snapshots. Data points are actual RoK Battles site generations from the GitHub monitor history; no missing days are invented.</p>
@@ -92,7 +109,7 @@
     const TRADE_AXIS_MAX=200; // Fixed scale for web charts and PNG exports
     const HISTORY_DAY_MS=24*60*60*1000;
     const HISTORY_PERIODS=[7,14,30];
-    const HISTORY_COLORS=['#f1bf6b','#72adff','#4adea2','#d99cff','#ff9680','#63d6d9','#c5d374','#f4b4dd','#b0adff','#ed9c5f','#83b9dd'];
+    const HISTORY_COLORS=['#f1bf6b','#72adff','#4adea2','#d99cff','#ff9680','#63d6d9','#c5d374','#f4b4dd','#b0adff','#ed9c5f','#83b9dd','#ffa6b9','#89c3a5','#ffc476'];
     const LOW_SAMPLE_GOVERNORS=250; // Same cutoff for the webpage and PNG exports
     const cfg={
       inf:{name:'Infantry',ids:['10-621','621-545','621-596','621-185','595-621','595-596','545-185','595-545','545-621','595-185','595-616','545-616','545-596','595-194'],file:'data/trades_inf.json',report:'REPORT_INF.md'},
@@ -100,7 +117,7 @@
       arch:{name:'Archer',ids:['509-6','509-179','611-179','611-6','611-187','187-179','187-611','179-187','179-459','187-186'],file:'data/trades_archer.json',report:'REPORT_ARCHER.md'}
     };
     const emptyStore=()=>({scenario:'7d/openField',snapshots:{},history:[],lastCheckedAtUTC:null,lastRunSuccessCount:null,lastErrors:{}});
-    const state={active:'inf',query:'',trendPair:{inf:'all',cav:'all',arch:'all'},trendMetric:'trade',trendDays:7,data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
+    const state={active:'inf',query:'',trendPair:{inf:'all',cav:'all',arch:'all'},trendMetric:'trade',trendDays:7,trendView:'top5',data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
     const $=id=>document.getElementById(id);
     const fmt=new Intl.NumberFormat('en-US');
     const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -196,37 +213,50 @@
     function historyView(type=state.active,allowedIds=null){
       const all=tradeHistory(type),visible=allowedIds?all.filter(s=>allowedIds.includes(s.id)):all;
       const pair=state.trendPair[type];
-      return{series:pair==='all'?visible:visible.filter(s=>s.id===pair),all,metric:state.trendMetric};
+      const ranked=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
+      const overview=state.trendView==='top5'?ranked.slice(0,5):visible;
+      return{series:pair==='all'?overview:visible.filter(s=>s.id===pair),all,visible,metric:state.trendMetric};
     }
     function historyBounds(series,metric){
       const points=series.flatMap(s=>s.points.map(p=>({time:p.time,value:metric==='delta'?p.trade-s.baseline:p.trade})));
       if(!points.length)return null;
       const times=points.map(p=>p.time),values=points.map(p=>p.value);
       const rawMin=Math.min(...values),rawMax=Math.max(...values);
-      const spread=Math.max(rawMax-rawMin,metric==='delta'?2:6),pad=spread*.14;
-      let ymin=Math.floor((rawMin-pad)/5)*5,ymax=Math.ceil((rawMax+pad)/5)*5;
+      // Zoom the y-axis for small trade and delta-pp changes instead of hiding them in 5pp increments.
+      const minSpread=metric==='delta'?.25:series.length===1?.7:6;
+      const spread=Math.max(rawMax-rawMin,minSpread),pad=spread*.16;
+      const rough=(spread+2*pad)/5,mag=Math.pow(10,Math.floor(Math.log10(Math.max(rough,1e-6))));
+      const tick=([1,2,2.5,5,10].find(v=>v*mag>=rough)||10)*mag;
+      let ymin=Math.floor((rawMin-pad)/tick)*tick,ymax=Math.ceil((rawMax+pad)/tick)*tick;
       if(metric==='delta'){ymin=Math.min(ymin,0);ymax=Math.max(ymax,0);}
-      if(ymax-ymin<5){ymin-=2.5;ymax+=2.5;}
+      if(ymax-ymin<tick){ymin-=tick;ymax+=tick;}
       let xmin=Math.min(...times),xmax=Math.max(...times);
-      const xpad=Math.max((xmax-xmin)*.025,4*60*60*1000);
+      const xpad=Math.max((xmax-xmin)*.035,6*60*60*1000);
       xmin-=xpad;xmax+=xpad;
       return{xmin,xmax,ymin,ymax,points};
     }
     function renderTrend(){
-      const type=state.active,selectedIds=selected().map(r=>r.id),data=historyView(type,selectedIds),{series,metric}=data;
+      const type=state.active,selectedIds=selected().map(r=>r.id),data=historyView(type,selectedIds),{series,metric,visible}=data;
       const pairInput=$('trendPair'),selectedValue=state.trendPair[type],days=state.trendDays;
       $('trendHeading').textContent=`Trade Efficiency — Last ${days} Days`;
       $('trendDays').value=String(days);
       $('trendScreenshotOption').textContent=`${days}-day trend`;
       // The search box also limits the selectable trend pairings, without changing their stored history.
       const candidates=rows(type).filter(r=>selectedIds.includes(r.id));
-      pairInput.innerHTML=`<option value="all">All ${candidates.length} pairings</option>`+candidates.map(r=>`<option value="${r.id}">${esc(pairName(r.id))}</option>`).join('');
+      pairInput.innerHTML=`<option value="all">Overview (${candidates.length} pairings)</option>`+candidates.map(r=>`<option value="${r.id}">${esc(pairName(r.id))}</option>`).join('');
       if(selectedValue!=='all'&&!selectedIds.includes(selectedValue)){state.trendPair[type]='all';}
       pairInput.value=state.trendPair[type];$('trendMetric').value=metric;
-      $('trendBack').hidden=state.trendPair[type]==='all';
+      const focused=state.trendPair[type]!=='all',available=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
+      $('trendBack').disabled=!focused;
+      $('trendView').value=state.trendView;$('trendView').disabled=focused;
       const active=historyView(type,selectedIds).series.filter(s=>s.points.length);
       const allPoints=active.flatMap(s=>s.points),bounds=historyBounds(active,metric);
       const status=$('trendSummary'),svgRoot=$('trendGraphic'),legend=$('trendLegend'),foot=$('trendFoot');
+      $('trendHint').textContent=focused
+        ?'Focused pairing · Hover over observations to see exact values. Choose another pair below, or click “Back to all pairings”.'
+        :state.trendView==='top5'
+          ?`Clear view: top ${Math.min(5,available.length)} of ${available.length} verified pairings by latest Trade %. Click any line or pairing below to focus; switch to All pairings to show every line.`
+          :`All ${available.length} verified pairings in the chart. Lines may overlap; click a line or pairing below to focus, or switch to Top 5 for a cleaner comparison.`;
       if(!bounds){
         status.textContent=state.sync[type]==='loading'?`Loading ${days}-day history from GitHub…`:`No verified site-generated trade history in the last ${days} days.`;
         svgRoot.innerHTML='<div class="empty">No recorded 7-day Open Field trade snapshots are available for this selection.</div>';
@@ -244,7 +274,7 @@
         status.innerHTML=`<span><strong>${esc(s.name)}</strong></span><span>First: <strong>${trade(first.trade)}</strong></span><span>Latest: <strong>${trade(last.trade)}</strong></span><span>Net change: <strong class="${deltaCls(delta)}">${deltaText(delta)}${delta===null?'':' pp'}</strong></span><span>${s.points.length} observed snapshots</span>`;
       }else{
         const positive=changes.find(s=>s.delta>0),negative=[...changes].reverse().find(s=>s.delta<0);
-        status.innerHTML=`<span><strong>${active.length} pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
+        status.innerHTML=`<span><strong>${state.trendView==='top5'?`Top ${active.length} of ${available.length}`:`${active.length}`} pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
       }
       const W=1050,H=390,left=82,right=34,top=25,bottom=67,pw=W-left-right,ph=H-top-bottom;
       const sx=x=>left+(x-bounds.xmin)/(bounds.xmax-bounds.xmin)*pw;
@@ -253,7 +283,7 @@
       for(let i=0;i<=5;i++){
         const yValue=bounds.ymin+(bounds.ymax-bounds.ymin)*i/5,py=sy(yValue);
         svg+=`<line x1="${left}" x2="${W-right}" y1="${py.toFixed(2)}" y2="${py.toFixed(2)}" stroke="#43516a" stroke-width="1" opacity=".68"/>`;
-        svg+=`<text x="${left-12}" y="${(py+4).toFixed(2)}" text-anchor="end" fill="#a6b8cd" font-size="12">${(Math.abs(yValue)<.005?0:yValue).toFixed(Math.abs(bounds.ymax-bounds.ymin)<15?1:0)}${metric==='trade'?'%':''}</text>`;
+        svg+=`<text x="${left-12}" y="${(py+4).toFixed(2)}" text-anchor="end" fill="#a6b8cd" font-size="12">${(Math.abs(yValue)<.00001?0:yValue).toFixed(Math.abs(bounds.ymax-bounds.ymin)<2?2:Math.abs(bounds.ymax-bounds.ymin)<10?1:0)}${metric==='trade'?'%':''}</text>`;
       }
       const ref=metric==='delta'?0:100;
       if(ref>=bounds.ymin&&ref<=bounds.ymax){const py=sy(ref);svg+=`<line x1="${left}" x2="${W-right}" y1="${py.toFixed(2)}" y2="${py.toFixed(2)}" stroke="#d7e1ed" stroke-width="1.5" stroke-dasharray="7 6" opacity=".9"/>`;
@@ -271,13 +301,17 @@
           path+=`${lastTime!==null&&p.time-lastTime<=36*60*60*1000?'L':'M'}${x.toFixed(2)},${y.toFixed(2)} `;
           lastTime=p.time;
         }
-        svg+=`<path d="${path.trim()}" stroke="${s.color}" stroke-width="${active.length===1?3.1:2.0}" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="${active.length===1?1:.85}"/>`;
+        svg+=`<path d="${path.trim()}" stroke="${s.color}" stroke-width="${active.length===1?3.7:2.5}" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="1"/><path d="${path.trim()}" data-trend-id="${s.id}" stroke="transparent" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><title>Click to focus ${esc(s.name)}</title></path>`;
         for(const p of s.points){const v=metric==='delta'?p.trade-s.baseline:p.trade;
-          svg+=`<circle cx="${sx(p.time).toFixed(2)}" cy="${sy(v).toFixed(2)}" r="${active.length===1?4.6:3.1}" fill="${s.color}" stroke="#162337" stroke-width="1.3"><title>${esc(s.name)} · ${historyStamp(p.time)} · ${trade(p.trade)} · Δ ${deltaText(p.trade-s.baseline)} pp · ${num(p.reports)} reports</title></circle>`;}
+          svg+=`<circle data-trend-id="${s.id}" cx="${sx(p.time).toFixed(2)}" cy="${sy(v).toFixed(2)}" r="${active.length===1?5.0:3.8}" fill="${s.color}" stroke="#162337" stroke-width="1.3"><title>${esc(s.name)} · ${historyStamp(p.time)} · ${trade(p.trade)} · Δ ${deltaText(p.trade-s.baseline)} pp · ${num(p.reports)} reports</title></circle>`;}
       }
       svg+=`<text x="${left}" y="${H-6}" fill="#8296b2" font-size="11">Site-generated timestamps (UTC) · Actual observations only</text></svg>`;
       svgRoot.innerHTML=svg;
-      legend.innerHTML=active.map(s=>`<button type="button" class="trend-key" data-trend-id="${s.id}" title="Focus on ${esc(s.name)}"><span class="trend-swatch" style="background:${s.color}"></span>${esc(s.name)}${s.points[s.points.length-1]?.governors<LOW_SAMPLE_GOVERNORS?'<span class="low-sample">Low sample</span>':''}</button>`).join('');
+      const visibleIds=new Set(active.map(s=>s.id));
+      legend.innerHTML=available.map(s=>{
+        const latest=s.points[s.points.length-1],isFocused=state.trendPair[type]===s.id,plotted=visibleIds.has(s.id);
+        return `<button type="button" class="trend-key ${plotted?'plotted':''} ${isFocused?'active':''}" aria-pressed="${isFocused}" data-trend-id="${s.id}" title="Focus on ${esc(s.name)}"><span class="trend-swatch" style="background:${s.color}"></span><span class="trend-name">${esc(s.name)}${latest.governors<LOW_SAMPLE_GOVERNORS?'<span class="low-sample">Low sample</span>':''}</span><strong class="trend-latest">${trade(latest.trade)}</strong></button>`;
+      }).join('');
       foot.textContent=`Rolling ${days}-day filter · Recorded ${historyStamp(oldest)} to ${historyStamp(newest)} (${coverage.toFixed(1)} days of available history). Lines stop when observations are more than 36h apart. ${metric==='delta'?'Change is measured in percentage points relative to the first recorded observation for each pair.':'Trade efficiency = KP gained ÷ KP lost × 100.'} Each point represents a rolling 7-day Open Field sample, not a cumulative ${days}-day report. No earlier or missing observations are invented.`;
     }
 
@@ -361,11 +395,13 @@
     async function discord(){const r=selected(),name=cfg[state.active].name,q=state.data[state.active];const valid=r.filter(x=>x.s),byDps=[...valid].sort((a,b)=>b.s.dps-a.s.dps).slice(0,3);const lines=[`**RoK Combat Lab — ${name} Trade Report**`,`**7 Days / Open Field** · ${valid.length}/${r.length} pairings`,`Site: ${generation(state.active)} · Checked: ${simpleDate(q.lastCheckedAtUTC)}`,'',...r.map((x,i)=>`${i+1}. **${pairName(x.id)}** — ${trade(x.s?.tradePercent)} | ${x.s?num(x.s.battles):'N/A'} reports | Δ ${deltaText(x.delta)==='N/A'?'N/A':deltaText(x.delta)+'pp'}`),'',`**Top DPS / Combat Statistics**`,...byDps.map(x=>`${pairName(x.id)}: DPS ${three(x.s.dps)} · SPS ${three(x.s.sps)} · TPS ${three(x.s.tps)} · KP ${kp(x.s.killPointsGained)}/${kp(x.s.killPointsLost)}`),'',`Source: https://rokbattles.com/combat-lab`,`Made by Vinc69cmAløT`];const text=lines.join('\n');try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);else throw Error('Clipboard API unavailable');toast(`${name} report copied for Discord.`);}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.append(ta);ta.select();const copied=document.execCommand('copy');ta.remove();toast(copied?'Discord report copied.':'Clipboard blocked by the browser. Use CSV export instead.');}}
     document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{state.active=btn.dataset.tab;state.query='';$('search').value='';render();}));
     $('search').addEventListener('input',e=>{state.query=e.target.value.trim().toLowerCase();render();});
+    $('trendView').addEventListener('change',e=>{if(!['top5','all'].includes(e.target.value))return;state.trendView=e.target.value;renderTrend();});
     $('trendPair').addEventListener('change',e=>{state.trendPair[state.active]=e.target.value;renderTrend();});
     $('trendDays').addEventListener('change',e=>{const days=Number(e.target.value);if(!HISTORY_PERIODS.includes(days))return;state.trendDays=days;renderTrend();});
     $('trendBack').addEventListener('click',()=>{state.trendPair[state.active]='all';state.query='';$('search').value='';render();});
     $('trendMetric').addEventListener('change',e=>{state.trendMetric=e.target.value;renderTrend();});
     $('trendLegend').addEventListener('click',e=>{const b=e.target.closest('button[data-trend-id]');if(b){state.trendPair[state.active]=b.dataset.trendId;renderTrend();}});
+    $('trendGraphic').addEventListener('click',e=>{const point=e.target.closest('[data-trend-id]');if(point){state.trendPair[state.active]=point.dataset.trendId;renderTrend();}});
     // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.
     // Screenshot creation requires a successful dataset fetch.
     function exportScreenshot(mode='report') {
@@ -477,7 +513,7 @@
       function drawTradeTrend(y){
         const model=historyView(type,items.map(r=>r.id)),valid=model.series.filter(s=>s.points.length),metric=model.metric;
         y=sectionHead(`Trade Efficiency — Last ${state.trendDays} Days`,y,`${model.series.length} pairing(s) · ${metric==='trade'?'Trade %':'Change (Δ pp)'}`);
-        const panelH=valid.length>1?560:448,panelY=y,x=margin,w=contentW;
+        const panelH=valid.length>1?Math.max(560,450+Math.ceil(valid.length/2)*24):448,panelY=y,x=margin,w=contentW;
         rect(x,panelY,w,panelH,17,P.chart,P.stroke);
         if(!valid.length){t(`No verified ${state.trendDays}-day GitHub history is available.`,x+25,y+78,17,P.muted);return y+panelH+42;}
         const bounds=historyBounds(valid,metric),allpts=valid.flatMap(s=>s.points),first=Math.min(...allpts.map(p=>p.time)),last=Math.max(...allpts.map(p=>p.time));
@@ -489,7 +525,7 @@
         for(let i=0;i<=5;i++){
           const v=bounds.ymin+(bounds.ymax-bounds.ymin)*i/5,py=sy(v);
           line(lx,py,rx,py,'#42516a',.8);
-          t((Math.abs(v)<.005?'0':v.toFixed(bounds.ymax-bounds.ymin<15?1:0))+(metric==='trade'?'%':''),lx-13,py,11,P.muted2,580,'right');
+          t((Math.abs(v)<.005?'0':v.toFixed(bounds.ymax-bounds.ymin<2?2:bounds.ymax-bounds.ymin<10?1:0))+(metric==='trade'?'%':''),lx-13,py,11,P.muted2,580,'right');
           const tm=bounds.xmin+(bounds.xmax-bounds.xmin)*i/5,px=sx(tm);
           c.save();c.setLineDash([3,5]);line(px,ty,px,by,'#40506a',.8);c.restore();
           t(historyDate(tm),px,by+22,11,P.muted2,600,'center');

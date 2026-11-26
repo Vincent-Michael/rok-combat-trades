@@ -48,6 +48,10 @@
     .trend-hint{margin:0 0 11px;color:#bed3e9;font-size:12px;line-height:1.55}
     .trend-back:not([disabled]){background:#75532c;border-color:#e4b46c;color:#fff4db}
     .trend-back:not([disabled]):hover{background:#976a32}
+    .trend-deselect{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:7px 11px;background:#1a293a;border:1px solid #53677f;border-radius:9px;color:#d9e5f5;font-weight:700;font-size:12px;white-space:nowrap;cursor:pointer}
+    .trend-deselect:hover:not([disabled]){background:#344a63;border-color:#7893b3}
+    .trend-deselect:disabled{opacity:.5;cursor:default}
+    .trend-deselect:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     .trend-back[disabled]{opacity:.60;cursor:default}
     .trend-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:9px 0 18px}
     .trend-key{min-width:0;width:100%;display:flex;align-items:center;gap:8px;padding:9px 11px;background:#141f2f;border:1px solid #2e4058;border-radius:9px;opacity:.5;transition:opacity .13s,background .13s,border .13s}
@@ -86,6 +90,7 @@
           <h2 id="trendHeading">Trade Efficiency — Last 7 Days</h2>
           <div class="trend-controls">
             <button type="button" class="trend-back" id="trendBack" aria-label="Select all commander pairings" disabled>↺ Select all pairs</button>
+            <button type="button" class="trend-deselect" id="trendDeselect" aria-label="Deselect all commander pairings">× Deselect all pairs</button>
             <label class="trend-guide" for="trendDays">Compare</label><select class="trend-select" id="trendDays" aria-label="Trade history comparison period"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
             <label class="trend-guide" for="trendMetric">Show</label><select class="trend-select" id="trendMetric" aria-label="Trade history measurement"><option value="trade">Trade %</option><option value="delta">Change (Δ pp)</option></select>
           </div>
@@ -257,7 +262,8 @@
       const allPoints=active.flatMap(s=>s.points),bounds=historyBounds(active,metric);
       const status=$('trendSummary'),svgRoot=$('trendGraphic'),legend=$('trendLegend'),foot=$('trendFoot');
       $('trendBack').disabled=selectedCount===all.length;
-      $('trendHint').textContent=`${selectedCount} of ${all.length} pairings selected · Click a pairing to hide or show its line. Use “Select all pairs” to restore everything.`;
+      $('trendDeselect').disabled=selectedCount===0;
+      $('trendHint').textContent=`${selectedCount} of ${all.length} pairings selected · Click any pairing to hide or show its line, or use “Select all pairs” and “Deselect all pairs”.`;
       // Buttons, not checkboxes: every click toggles just that single pairing.
       // Keep the entire list visible even if nothing is currently selected.
       legend.innerHTML=available.map(s=>{
@@ -414,6 +420,7 @@
     $('trendDays').addEventListener('change',e=>{const days=Number(e.target.value);if(!HISTORY_PERIODS.includes(days))return;state.trendDays=days;renderTrend();});
     $('trendMetric').addEventListener('change',e=>{state.trendMetric=e.target.value;renderTrend();});
     $('trendBack').addEventListener('click',()=>{state.trendSelected[state.active]=null;renderTrend();});
+    $('trendDeselect').addEventListener('click',()=>{state.trendSelected[state.active]=[];renderTrend();});
     $('trendLegend').addEventListener('click',e=>{const item=e.target.closest('button[data-trend-id]');if(item)toggleTrendPair(item.dataset.trendId);});
     $('trendGraphic').addEventListener('click',e=>{const line=e.target.closest('[data-trend-id]');if(line)toggleTrendPair(line.dataset.trendId);});
         // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.

@@ -80,7 +80,7 @@
   <main id="top" class="shell">
     <section class="hero"><div><div class="eyebrow">Verified combat analytics</div><h1>Trade performance.<br><span class="gold">Beyond the headlines.</span></h1><p class="intro">Track commander pairings using 7-day Open Field battle reports. Compare Kill Point efficiency, damage, sample size and combat statistics with directional accuracy.</p></div><div class="context"><span class="mini"><b id="monitoredPairsTotal">37</b> Monitored pairings</span><span class="mini"><b>3</b> Troop types</span><span class="mini">Primary → Secondary</span></div></section>
     <div class="overview" aria-label="Overview of the top commander pairings"><div class="overview-card"><div><div class="small">🛡 Infantry leader</div><div class="leader" id="heroInfPair">Loading from GitHub…</div><div class="tip" id="heroInfTip">Trade efficiency · 7-day Open Field</div></div><div class="rate" id="heroInfRate">—</div></div><div class="overview-card"><div><div class="small">♞ Cavalry leader</div><div class="leader" id="heroCavPair">Loading from GitHub…</div><div class="tip" id="heroCavTip">Trade efficiency · 7-day Open Field</div></div><div class="rate" id="heroCavRate">—</div></div><div class="overview-card"><div><div class="small">🏹 Archer leader</div><div class="leader" id="heroArchPair">Loading from GitHub…</div><div class="tip" id="heroArchTip">Trade efficiency · 7-day Open Field</div></div><div class="rate" id="heroArchRate">—</div></div></div>
-    <div class="report-toolbar"><div class="tabs" role="tablist" aria-label="Troop class"><button class="tab" id="tab-inf" role="tab" aria-controls="reportPanel" aria-selected="true" data-tab="inf">🛡 Infantry <span class="count">13</span></button><button class="tab" id="tab-cav" role="tab" aria-controls="reportPanel" aria-selected="false" data-tab="cav">♞ Cavalry <span class="count">14</span></button><button class="tab" id="tab-arch" role="tab" aria-controls="reportPanel" aria-selected="false" data-tab="arch">🏹 Archer <span class="count">10</span></button></div><div class="toolbar-actions"><input class="search" id="search" type="search" autocomplete="off" aria-label="Filter commander pairings" placeholder="Search commander pairing…"><div class="capture-actions"><select class="capture-mode" id="screenshotMode" aria-label="Screenshot contents"><option value="report">Full report</option><option value="chart">Trade chart</option><option value="trend" id="trendScreenshotOption">7-day trend</option></select><button class="action capture-button" id="screenshotBtn" title="Save a high-resolution PNG after verified GitHub statistics are loaded"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="4"/></svg>Screenshot PNG</button></div><button class="action" id="exportBtn" title="Export currently visible rows as CSV"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>Export CSV</button><button class="action" id="discordBtn" title="Copy a compact report"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>Discord Summary</button><button class="action primary" id="refreshBtn" title="Re-fetch the latest saved GitHub monitor data"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.6L3 9m0-6v6h6M4 13a8 8 0 0 0 14.5 4.6L21 15m0 6v-6h-6"/></svg>Sync GitHub</button></div></div>
+    <div class="report-toolbar"><div class="tabs" role="tablist" aria-label="Troop class"><button class="tab" id="tab-inf" role="tab" aria-controls="reportPanel" aria-selected="true" data-tab="inf">🛡 Infantry <span class="count">13</span></button><button class="tab" id="tab-cav" role="tab" aria-controls="reportPanel" aria-selected="false" data-tab="cav">♞ Cavalry <span class="count">14</span></button><button class="tab" id="tab-arch" role="tab" aria-controls="reportPanel" aria-selected="false" data-tab="arch">🏹 Archer <span class="count">10</span></button></div><div class="toolbar-actions"><input class="search" id="search" type="search" autocomplete="off" aria-label="Filter commander pairings" placeholder="Search commander pairing…"><div class="capture-actions"><select class="capture-mode" id="screenshotMode" aria-label="Screenshot contents"><option value="report">Full report (landscape)</option><option value="chart">Trade chart</option><option value="trend" id="trendScreenshotOption">7-day trend</option></select><button class="action capture-button" id="screenshotBtn" title="Save a high-resolution PNG after verified GitHub statistics are loaded"><svg viewBox="0 0 24 24"><path d="M4 7h4l2-3h4l2 3h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><circle cx="12" cy="13" r="4"/></svg>Screenshot PNG</button></div><button class="action" id="exportBtn" title="Export currently visible rows as CSV"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v4h16v-4"/></svg>Export CSV</button><button class="action" id="discordBtn" title="Copy a compact report"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>Discord Summary</button><button class="action primary" id="refreshBtn" title="Re-fetch the latest saved GitHub monitor data"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.5-4.6L3 9m0-6v6h6M4 13a8 8 0 0 0 14.5 4.6L21 15m0 6v-6h-6"/></svg>Sync GitHub</button></div></div>
     <section id="reportPanel" role="tabpanel" aria-labelledby="tab-inf">
       <div class="statusline"><div id="monitorStatus" class="status warn"><span class="s-dot"></span><span>Loading verified statistics from GitHub…</span></div><div class="timestamps" id="times">Workflow checked: — · Site generated: —</div></div>
       <div class="kpi-row" aria-label="Statistics overview"><div class="kpi"><div class="kpi-label">Verified pairs</div><div class="kpi-value" id="kpiVerified">—</div><div class="kpi-sub" id="kpiVerifiedSub">Waiting for GitHub</div></div><div class="kpi"><div class="kpi-label">Best trade efficiency</div><div class="kpi-value green" id="kpiBest">—</div><div class="kpi-sub" id="kpiBestSub">Awaiting GitHub data</div></div><div class="kpi"><div class="kpi-label">Highest DPS</div><div class="kpi-value amber" id="kpiDps">—</div><div class="kpi-sub" id="kpiDpsSub">Awaiting GitHub data</div></div><div class="kpi"><div class="kpi-label">Largest report sample</div><div class="kpi-value" id="kpiReports">—</div><div class="kpi-sub" id="kpiReportsSub">Awaiting GitHub data</div></div></div>
@@ -425,9 +425,212 @@
     $('trendGraphic').addEventListener('click',e=>{const line=e.target.closest('[data-trend-id]');if(line)toggleTrendPair(line.dataset.trendId);});
         // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.
     // Screenshot creation requires a successful dataset fetch.
+
+    // Landscape (16:9) Full Report screenshot; chart-only/trend-only exports remain unchanged.
+    function exportLandscapeReport(type,items,all,name){
+      const W=2800,H=1575,S=2,M=48,G=30,COL=(W-2*M-G)/2;
+      const canvas=document.createElement('canvas');
+      canvas.width=W*S;canvas.height=H*S;
+      const c=canvas.getContext('2d',{alpha:false});
+      if(!c)throw Error('Landscape PNG canvas is not available');
+      c.setTransform(S,0,0,S,0,0);
+      const P={bg:'#0b111d',panel:'#131f30',chart:'#172439',edge:'#364761',text:'#edf3fb',sub:'#acbed5',muted:'#829ab5',gold:'#f1bf6b',green:'#22c55e',red:'#ef4444',track:'#293d53'};
+      const font=(size=16,weight=500)=>weight+' '+size+'px Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif';
+      function txt(str,x,y,size=16,color=P.text,weight=500,align='left',maxW){
+        c.font=font(size,weight);c.textAlign=align;c.textBaseline='middle';c.fillStyle=color;
+        if(maxW&&maxW>0)c.fillText(String(str??''),x,y,maxW);
+        else c.fillText(String(str??''),x,y);
+      }
+      function box(x,y,w,hh,r=10,fill=P.panel,border=P.edge){
+        c.beginPath();if(c.roundRect)c.roundRect(x,y,w,hh,r);else c.rect(x,y,w,hh);
+        c.fillStyle=fill;c.fill();
+        if(border){c.lineWidth=1;c.strokeStyle=border;c.stroke();}
+      }
+      function stroke(x1,y1,x2,y2,color=P.edge,width=1){
+        c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.strokeStyle=color;c.lineWidth=width;c.stroke();
+      }
+      function writeWrapped(str,x,y,maxW,size=15,lineH=21,color=P.sub,maxLines=5){
+        c.font=font(size,500);
+        const words=String(str).split(/\s+/),lines=[];let current='';
+        for(const word of words){
+          const next=current?current+' '+word:word;
+          if(current&&c.measureText(next).width>maxW){lines.push(current);current=word;}
+          else current=next;
+        }
+        if(current)lines.push(current);
+        lines.slice(0,maxLines).forEach(s=>{txt(s,x,y,size,color,500,'left',maxW);y+=lineH;});
+        return y;
+      }
+      function heading(s,x,y,sub){
+        txt(s,x,y,23,P.text,770);
+        if(sub)txt(sub,x+COL,y,13,P.muted,550,'right',COL*.48);
+      }
+      function lowDot(x,y){box(x,y-5,10,10,3,'#e1ab60',null);}
+      function smallLegendDot(x,y,color){box(x,y-3,18,5,2,color,null);}
+      c.fillStyle=P.bg;c.fillRect(0,0,W,H);
+      // Header and metadata
+      c.fillStyle=P.gold;c.fillRect(0,0,W,7);
+      const grad=c.createLinearGradient(0,8,W,245);
+      grad.addColorStop(0,'#1c344f');grad.addColorStop(1,P.bg);
+      c.fillStyle=grad;c.fillRect(0,8,W,237);
+      txt('ROK  /  COMBAT LAB',M,42,18,P.gold,800);
+      txt(name+'  ·  FULL COMBAT REPORT',M,86,39,P.text,780);
+      txt('7-DAY OPEN FIELD · LANDSCAPE REPORT · PRIMARY → SECONDARY',M,123,15,P.gold,690);
+      txt('Site generated: '+generation(type),W-M,61,15,P.sub,590,'right',900);
+      txt('Checked: '+simpleDate(state.data[type].lastCheckedAtUTC),W-M,88,15,P.sub,590,'right',900);
+      txt((state.query?'Filtered '+items.length+' / ':'')+all.filter(x=>x.s).length+' validated of '+cfg[type].ids.length+' monitored pairings',W-M,114,14,P.muted,590,'right',900);
+      // Four compact KPI cards
+      const valid=all.filter(x=>x.s),best=valid[0],
+        maxDps=valid.length?valid.reduce((a,b)=>a.s.dps>b.s.dps?a:b):null,
+        maxReports=valid.length?valid.reduce((a,b)=>a.s.battles>b.s.battles?a:b):null;
+      const kpis=[
+        ['VALIDATED PAIRS',valid.length+' / '+cfg[type].ids.length,'7d / Open Field'],
+        ['BEST TRADE',best?trade(best.s.tradePercent):'N/A',best?pairName(best.id):'Unavailable'],
+        ['HIGHEST DPS',maxDps?three(maxDps.s.dps):'N/A',maxDps?pairName(maxDps.id):'Unavailable'],
+        ['MOST REPORTS',maxReports?num(maxReports.s.battles):'N/A',maxReports?pairName(maxReports.id):'Unavailable']
+      ];
+      const KG=14,KW=(W-2*M-3*KG)/4;
+      kpis.forEach((s,i)=>{
+        const x=M+i*(KW+KG);box(x,144,KW,100,12);
+        txt(s[0],x+18,163,13,P.muted,790);
+        txt(s[1],x+18,198,29,i===1?P.green:i===2?P.gold:P.text,800);
+        txt(s[2],x+18,226,14,P.sub,560,'left',KW-34);
+      });
+      const TOP_T=271,TOP_Y=294,TOP_H=493,LEFT=M,RIGHT=M+COL+G;
+      // LEFT: latest Trade % for every visible pairing, fixed 0..200% axis.
+      heading('Trade Efficiency Ranking',LEFT,TOP_T,items.length+' pairings · latest 7-day snapshot');
+      box(LEFT,TOP_Y,COL,TOP_H,15,P.chart);
+      txt('●',LEFT+22,TOP_Y+30,17,P.green,750);txt('Positive >100%',LEFT+39,TOP_Y+30,14,P.green,650);
+      txt('●',LEFT+213,TOP_Y+30,17,P.red,750);txt('Negative <100%',LEFT+230,TOP_Y+30,14,P.red,650);
+      txt('●',LEFT+418,TOP_Y+30,17,P.gold,750);txt('Low sample <250 governors',LEFT+435,TOP_Y+30,14,P.gold,650);
+      const n=items.length,CHART_FROM=TOP_Y+65,CHART_TO=TOP_Y+TOP_H-55;
+      const barRowH=Math.min(28,(CHART_TO-CHART_FROM)/Math.max(n,1));
+      const trackX=LEFT+548,trackW=COL-548-112,rateX=LEFT+COL-24;
+      items.forEach((r,i)=>{
+        const cy=CHART_FROM+(i+.5)*barRowH,v=r.s?.tradePercent;
+        if(i%2===1)box(LEFT+12,cy-barRowH/2,COL-24,barRowH,0,'#ffffff05',null);
+        txt(String(i+1).padStart(2,'0'),LEFT+20,cy,12,P.muted,660);
+        txt(pairName(r.id),LEFT+56,cy,15,P.text,620,'left',396);
+        if(isLowSample(r.s))lowDot(LEFT+466,cy);
+        box(trackX,cy-7,trackW,14,3,P.track,null);
+        if(r.s){const color=v>100?P.green:v<100?P.red:'#a2acb8';
+          box(trackX,cy-7,trackW*Math.min(Math.max(v,0),200)/200,14,3,color,null);}
+        const mid=trackX+trackW/2;
+        c.save();c.setLineDash([4,3]);stroke(mid,cy-12,mid,cy+12,'#e4edf5',1.3);c.restore();
+        txt(r.s?trade(v):'N/A',rateX,cy,15,!r.s?P.muted:v>100?P.green:v<100?P.red:P.text,770,'right',100);
+      });
+      const axisY=TOP_Y+TOP_H-31;
+      txt('0%',trackX,axisY,12,P.muted,550);
+      txt('100%',trackX+trackW/2,axisY,12,P.muted,550,'center');
+      txt('200%',trackX+trackW,axisY,12,P.muted,550,'right');
+      txt('Dashed line = 100% break-even',LEFT+22,TOP_Y+TOP_H-14,11,P.muted,530);
+      // RIGHT: actual selected historic observations, never generated/synthetic days.
+      const model=historyView(type),series=model.series.filter(s=>s.points.length),metric=model.metric;
+      heading('Trade Efficiency — Last '+state.trendDays+' Days',RIGHT,TOP_T,series.length+' selected · '+(metric==='trade'?'Trade %':'Change Δ pp'));
+      box(RIGHT,TOP_Y,COL,TOP_H,15,P.chart);
+      if(!series.length){
+        txt('No selected pairings have verified history for this period.',RIGHT+40,TOP_Y+100,19,P.sub,590);
+        txt('Select pairings on the website to show trend lines.',RIGHT+40,TOP_Y+135,16,P.muted,520);
+      }else{
+        const bounds=historyBounds(series,metric),allPts=series.flatMap(s=>s.points);
+        const first=Math.min(...allPts.map(p=>p.time)),last=Math.max(...allPts.map(p=>p.time));
+        txt(series.length+' pairings · '+new Set(allPts.map(p=>p.time)).size+' site generations · '+historyDate(first)+'–'+historyDate(last)+' UTC',RIGHT+24,TOP_Y+27,15,P.sub,600,'left',COL-48);
+        const x1=RIGHT+84,x2=RIGHT+COL-35,y1=TOP_Y+64,y2=TOP_Y+253,pw=x2-x1,ph=y2-y1;
+        const mapX=tm=>x1+(tm-bounds.xmin)/(bounds.xmax-bounds.xmin)*pw;
+        const mapY=v=>y1+(bounds.ymax-v)/(bounds.ymax-bounds.ymin)*ph;
+        for(let i=0;i<=4;i++){
+          const v=bounds.ymin+(bounds.ymax-bounds.ymin)*i/4,py=mapY(v);
+          stroke(x1,py,x2,py,'#455974',1);
+          txt((Math.abs(v)<.00001?0:v).toFixed(bounds.ymax-bounds.ymin<2?2:bounds.ymax-bounds.ymin<10?1:0)+(metric==='trade'?'%':''),x1-11,py,12,P.muted,540,'right');
+          const tm=bounds.xmin+(bounds.xmax-bounds.xmin)*i/4,px=mapX(tm);
+          c.save();c.setLineDash([3,5]);stroke(px,y1,px,y2,'#364c66',1);c.restore();
+          txt(historyDate(tm),px,y2+23,12,P.muted,550,'center');
+        }
+        const baseline=metric==='trade'?100:0;
+        if(baseline>=bounds.ymin&&baseline<=bounds.ymax){
+          const py=mapY(baseline);c.save();c.setLineDash([7,5]);stroke(x1,py,x2,py,'#f1f5fa',1.7);c.restore();
+        }
+        series.forEach(s=>{
+          c.beginPath();let prev=null;
+          s.points.forEach(p=>{
+            const val=metric==='delta'?p.trade-s.baseline:p.trade,xx=mapX(p.time),yy=mapY(val);
+            if(prev!==null&&p.time-prev<=36*60*60*1000)c.lineTo(xx,yy);else c.moveTo(xx,yy);
+            prev=p.time;
+          });
+          c.strokeStyle=s.color;c.lineWidth=series.length===1?3.7:2.3;c.stroke();
+          s.points.forEach(p=>{
+            const v=metric==='delta'?p.trade-s.baseline:p.trade;
+            c.beginPath();c.arc(mapX(p.time),mapY(v),series.length===1?4:3,0,Math.PI*2);c.fillStyle=s.color;c.fill();
+          });
+        });
+        // Legend: two columns, each item includes the actual latest verified %.
+        const LEG_TOP=TOP_Y+306,LEG_COL=(COL-48)/2,LEG_H=23;
+        series.forEach((s,i)=>{
+          const x=RIGHT+24+(i%2)*LEG_COL,y=LEG_TOP+Math.floor(i/2)*LEG_H,latest=s.points[s.points.length-1];
+          smallLegendDot(x,y,s.color);
+          txt(s.name,x+27,y,14,P.text,550,'left',LEG_COL-138);
+          txt(trade(latest.trade),x+LEG_COL-13,y,14,P.sub,680,'right',108);
+          if(latest.governors<LOW_SAMPLE_GOVERNORS)lowDot(x+LEG_COL-125,y);
+        });
+        txt('Site-generated data only · Missing periods are not interpolated',RIGHT+23,TOP_Y+TOP_H-15,11,P.muted,520);
+      }
+      // LOWER ROW: two compact, complete tables with every visible row.
+      const TABLE_TITLE=814,TABLE_Y=837,TABLE_H=472,HEADER_H=40,DATA_FROM=TABLE_Y+HEADER_H,DATA_BOTTOM=TABLE_Y+TABLE_H-12;
+      const rowH=Math.min(28,(DATA_BOTTOM-DATA_FROM)/Math.max(items.length,1));
+      heading('Trade Ranking & Battle Reports',LEFT,TABLE_TITLE,'Δ pp vs earlier distinct 7d snapshot');
+      box(LEFT,TABLE_Y,COL,TABLE_H,14,P.panel);
+      box(LEFT,TABLE_Y,COL,HEADER_H,11,'#1c2c41',null);
+      const rx=[LEFT+23,LEFT+73,LEFT+COL-403,LEFT+COL-237,LEFT+COL-20];
+      ['#','Commander Pairing','Trade %','Δ pp','Reports'].forEach((label,i)=>txt(label,rx[i],TABLE_Y+20,14,P.sub,790,i<2?'left':'right'));
+      items.forEach((r,i)=>{
+        const yy=DATA_FROM+(i+.5)*rowH,v=r.s?.tradePercent;
+        if(i%2)box(LEFT+8,DATA_FROM+i*rowH,COL-16,rowH,0,'#ffffff07',null);
+        txt(String(i+1).padStart(2,'0'),rx[0],yy,13,P.muted,670);
+        txt(pairName(r.id),rx[1],yy,15,P.text,600,'left',625);
+        if(isLowSample(r.s))lowDot(LEFT+COL-491,yy);
+        txt(r.s?trade(v):'N/A',rx[2],yy,15,!r.s?P.muted:v>100?P.green:v<100?P.red:P.text,710,'right',140);
+        txt(deltaText(r.delta),rx[3],yy,14,r.delta===null?P.muted:r.delta>0?P.green:r.delta<0?P.red:P.sub,700,'right',145);
+        txt(r.s?num(r.s.battles):'N/A',rx[4],yy,14,P.text,570,'right',170);
+      });
+      heading('Detailed Combat Statistics',RIGHT,TABLE_TITLE,'KP gained / lost · DPS / SPS / TPS');
+      box(RIGHT,TABLE_Y,COL,TABLE_H,14,P.panel);
+      box(RIGHT,TABLE_Y,COL,HEADER_H,11,'#1c2c41',null);
+      const mx=[RIGHT+20,RIGHT+COL-565,RIGHT+COL-425,RIGHT+COL-290,RIGHT+COL-155,RIGHT+COL-20];
+      ['Commander Pairing','KP Gained','KP Lost','DPS','SPS','TPS'].forEach((label,i)=>txt(label,mx[i],TABLE_Y+20,13,P.sub,790,i===0?'left':'right'));
+      items.forEach((r,i)=>{
+        const yy=DATA_FROM+(i+.5)*rowH,s=r.s;
+        if(i%2)box(RIGHT+8,DATA_FROM+i*rowH,COL-16,rowH,0,'#ffffff07',null);
+        txt(pairName(r.id),mx[0],yy,14,P.text,590,'left',650);
+        const vals=s?[kp(s.killPointsGained),kp(s.killPointsLost),three(s.dps),three(s.sps),three(s.tps)]:['N/A','N/A','N/A','N/A','N/A'];
+        vals.forEach((val,j)=>txt(val,mx[j+1],yy,14,P.sub,570,'right',134));
+      });
+      // Key findings and attribution, fitted to the bottom of the landscape image.
+      txt('KEY FINDINGS',M,1341,19,P.gold,780);
+      box(M,1361,W-2*M,145,13,P.panel);
+      const worst=valid[valid.length-1],low=valid.filter(r=>isLowSample(r.s));
+      const leftInsights=[
+        best&&worst?'Best trade: '+pairName(best.id)+' ('+trade(best.s.tradePercent)+'). Lowest: '+pairName(worst.id)+' ('+trade(worst.s.tradePercent)+').':'No validated trade data available.',
+        maxDps&&maxReports?'Highest DPS: '+pairName(maxDps.id)+' ('+three(maxDps.s.dps)+'). Most reports: '+pairName(maxReports.id)+' ('+num(maxReports.s.battles)+').':'No validated battle reports available.'
+      ];
+      const rightInsights=[
+        'Low sample (<250 governors): '+low.length+' pairing(s). Amber marks identify the affected pairings.',
+        'Δ pp requires an earlier distinct verified 7d/Open Field site snapshot; otherwise N/A.',
+        'Primary / secondary commander direction is preserved for every pairing.'
+      ];
+      let liY=1385,riY=1385;
+      for(const s of leftInsights){liY=writeWrapped(s,M+22,liY,COL-44,15,21,P.sub,3)+8;}
+      for(const s of rightInsights){riY=writeWrapped(s,RIGHT+22,riY,COL-44,15,21,P.sub,2)+5;}
+      stroke(M,1520,W-M,1520,P.edge);
+      txt('Source: RoK Battles · https://rokbattles.com/combat-lab',M,1540,14,P.sub,610);
+      txt('Trade history: actual site generations · No synthetic dates',W/2,1540,13,P.muted,520,'center',700);
+      txt('Made by Vinc69cmAløT',W-M,1540,16,P.gold,770,'right');
+      return canvas;
+    }
+
     function exportScreenshot(mode='report') {
       const type=state.active, items=selected(), all=rows(type), name=cfg[type].name;
       if(!all.some(x=>x.s))throw Error('No verified GitHub data loaded. Sync GitHub first.');
+      if(mode==='report')return exportLandscapeReport(type,items,all,name);
       const WIDTH=1260, SCALE=2, margin=56, contentW=WIDTH-margin*2;
       const scratch=document.createElement('canvas');
       scratch.width=WIDTH*SCALE;
@@ -679,7 +882,7 @@
           const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG encoding failed')),'image/png'));
           const url=URL.createObjectURL(blob),a=document.createElement('a');
           const date=new Date().toISOString().slice(0,10);
-          a.href=url;a.download=`RoK_Combat_Lab_${cfg[state.active].name}_${mode==='chart'?'Trade_Chart':mode==='trend'?`Trade_Trend_${state.trendDays}D`:'Full_Report'}_7d_OpenField_${date}.png`;
+          a.href=url;a.download=`RoK_Combat_Lab_${cfg[state.active].name}_${mode==='chart'?'Trade_Chart':mode==='trend'?`Trade_Trend_${state.trendDays}D`:'Full_Report_Landscape'}_7d_OpenField_${date}.png`;
           document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);
           toast(`${cfg[state.active].name} ${mode==='chart'?'trade chart':mode==='trend'?`${state.trendDays}-day trade trend`:'full report'} saved as a high-resolution PNG.`);
         }catch(e){console.error('PNG export failed:',e);toast(`PNG screenshot failed: ${e.message||e}`);}

@@ -58,6 +58,28 @@
     .trend-latest{flex-shrink:0;color:#e9f2ff;font-size:12px;font-variant-numeric:tabular-nums}
     .trend-plot [data-trend-id]{cursor:pointer}
     @media(max-width:720px){.trend-legend{grid-template-columns:1fr}.trend-key{padding:10px}.trend-controls{justify-content:flex-start}}
+    .trend-multi-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;border:1px solid #637b99;background:#253b53;color:#f0f7ff;border-radius:9px;font-size:12px;font-weight:750;padding:7px 12px;white-space:nowrap;cursor:pointer}
+    .trend-multi-toggle:hover,.trend-multi-toggle.active{background:#443726;border-color:#e3b46b;color:#fff4d9}
+    .trend-multi-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+    #trendMultiCount{font-size:10px;font-weight:600;color:#f4c884}
+    .trend-multi-panel{border:1px solid #456080;background:#0f1b2b;border-radius:12px;padding:15px;margin-bottom:16px}
+    .trend-multi-panel[hidden]{display:none!important}
+    .trend-multi-head{display:flex;flex-direction:column;gap:4px;margin-bottom:11px}
+    .trend-multi-head strong{font-size:14px;color:#f2f6fc}
+    .trend-multi-head span{font-size:11px;color:#a7bacf}
+    .trend-multi-actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+    .trend-multi-actions button{background:#22344b;border:1px solid #4f6684;border-radius:8px;padding:7px 11px;color:#dbe9fb;font-size:11px;font-weight:700}
+    .trend-multi-actions button:hover,.trend-multi-actions button:focus-visible{background:#344f6d;outline-color:var(--gold)}
+    .trend-multi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:310px;overflow:auto;scrollbar-color:#45617e #112035}
+    .trend-multi-choice{display:flex;align-items:center;gap:10px;min-width:0;padding:10px;background:#17283b;border:1px solid #304760;border-radius:9px;cursor:pointer;font-size:11px;color:#cfdaea}
+    .trend-multi-choice:hover{border-color:#6484a7;background:#1d344c}
+    .trend-multi-choice.chosen{border-color:#c49c64;background:#3a3027;color:#fff1d7}
+    .trend-multi-choice input{width:16px;height:16px;flex-shrink:0;accent-color:#e1b06a;cursor:pointer}
+    .trend-multi-choice .trend-multi-name{flex:1;min-width:0;line-height:1.4;font-weight:650}
+    .trend-multi-choice .trend-multi-name .low-sample{display:block;margin:2px 0 0}
+    .trend-multi-choice strong{white-space:nowrap;color:#f0f5ff;font-size:11px;font-variant-numeric:tabular-nums}
+    .trend-multi-empty{font-size:12px;color:#95a8c0}
+    @media(max-width:720px){.trend-multi-grid{grid-template-columns:1fr}.trend-multi-toggle{flex:1}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
     .capture-actions{display:flex;gap:5px;align-items:center}.capture-mode{border:1px solid #394a60;background:#19283a;color:#d9e3f1;border-radius:9px;min-height:39px;padding:0 8px;font-size:12px;font-weight:650;max-width:116px;cursor:pointer}.capture-button{border-color:#9a7440;background:#493824;color:#ffe4b3}.capture-button:hover{background:#675035}.capture-mode:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -81,12 +103,18 @@
       <section class="section" id="tradeTrendSection" aria-label="Trade history for the selected 7, 14 or 30 days">
         <div class="section-head"><h2 id="trendHeading">Trade Efficiency — Last 7 Days</h2><div class="trend-controls">
           <button type="button" class="trend-back" id="trendBack" aria-label="Back to all commander pairings" disabled>← Back to all pairings</button>
-          <label class="trend-guide" for="trendView">Overview</label><select class="trend-select" id="trendView" aria-label="Number of pairing lines to display"><option value="top5" selected>Top 5 (clear view)</option><option value="all">All pairings</option></select>
+          <label class="trend-guide" for="trendView">Overview</label><select class="trend-select" id="trendView" aria-label="Number of pairing lines to display"><option value="top5" selected>Top 5 (clear view)</option><option value="all">All pairings</option><option value="custom">Custom selection</option></select>
           <label class="trend-guide" for="trendPair">Pairing</label><select class="trend-select" id="trendPair" aria-label="Commander pairing in trade history"><option value="all">All pairings</option></select>
+          <button type="button" class="trend-multi-toggle" id="trendMultiToggle" aria-controls="trendMultiPanel" aria-expanded="false">☑ Select multiple pairs <span id="trendMultiCount"></span></button>
           <label class="trend-guide" for="trendDays">Compare</label><select class="trend-select" id="trendDays" aria-label="Trade history comparison period"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
           <label class="trend-guide" for="trendMetric">Show</label><select class="trend-select" id="trendMetric" aria-label="Trade history measurement"><option value="trade">Trade %</option><option value="delta">Change (Δ pp)</option></select>
         </div></div>
         <div class="trend-card">
+          <div class="trend-multi-panel" id="trendMultiPanel" hidden>
+            <div class="trend-multi-head"><strong>Choose pairs to compare</strong><span>Select several pairings to show their lines together in Trade Efficiency and PNG exports.</span></div>
+            <div class="trend-multi-actions"><button type="button" id="trendSelectTop">Select Top 5</button><button type="button" id="trendSelectAll">Select all</button><button type="button" id="trendClearSelection">Clear selection</button></div>
+            <div class="trend-multi-grid" id="trendMultiGrid" role="group" aria-label="Select multiple commander pairings"></div>
+          </div>
           <div class="trend-summary" id="trendSummary" role="status">Loading the 7-day trade history from GitHub…</div>
           <p class="trend-hint" id="trendHint">Top 5 overview · Choose a pairing below to zoom in; use Back to all pairings to return.</p>
           <div class="trend-scroller" id="trendGraphic"><div class="empty">Loading recorded site snapshots…</div></div>
@@ -117,7 +145,7 @@
       arch:{name:'Archer',ids:['509-6','509-179','611-179','611-6','611-187','187-179','187-611','179-187','179-459','187-186'],file:'data/trades_archer.json',report:'REPORT_ARCHER.md'}
     };
     const emptyStore=()=>({scenario:'7d/openField',snapshots:{},history:[],lastCheckedAtUTC:null,lastRunSuccessCount:null,lastErrors:{}});
-    const state={active:'inf',query:'',trendPair:{inf:'all',cav:'all',arch:'all'},trendMetric:'trade',trendDays:7,trendView:'top5',data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
+    const state={active:'inf',query:'',trendPair:{inf:'all',cav:'all',arch:'all'},trendMetric:'trade',trendDays:7,trendView:'top5',trendSelected:{inf:[],cav:[],arch:[]},trendMultiOpen:false,data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
     const $=id=>document.getElementById(id);
     const fmt=new Intl.NumberFormat('en-US');
     const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -214,7 +242,7 @@
       const all=tradeHistory(type),visible=allowedIds?all.filter(s=>allowedIds.includes(s.id)):all;
       const pair=state.trendPair[type];
       const ranked=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
-      const overview=state.trendView==='top5'?ranked.slice(0,5):visible;
+      const overview=state.trendView==='custom'?visible.filter(s=>state.trendSelected[type].includes(s.id)):state.trendView==='top5'?ranked.slice(0,5):visible;
       return{series:pair==='all'?overview:visible.filter(s=>s.id===pair),all,visible,metric:state.trendMetric};
     }
     function historyBounds(series,metric){
@@ -246,19 +274,34 @@
       pairInput.innerHTML=`<option value="all">Overview (${candidates.length} pairings)</option>`+candidates.map(r=>`<option value="${r.id}">${esc(pairName(r.id))}</option>`).join('');
       if(selectedValue!=='all'&&!selectedIds.includes(selectedValue)){state.trendPair[type]='all';}
       pairInput.value=state.trendPair[type];$('trendMetric').value=metric;
-      const focused=state.trendPair[type]!=='all',available=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
-      $('trendBack').disabled=!focused;
+      const focused=state.trendPair[type]!=='all',custom=state.trendView==='custom';
+      const available=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
+      const selectedPairs=state.trendSelected[type];
+      $('trendBack').disabled=!focused&&!custom;
+      $('trendBack').textContent=focused?(custom?'← Back to selected pairs':'← Back to all pairings'):(custom?'← Back to Top 5':'← Back to all pairings');
       $('trendView').value=state.trendView;$('trendView').disabled=focused;
+      $('trendMultiPanel').hidden=!state.trendMultiOpen;
+      $('trendMultiToggle').setAttribute('aria-expanded',String(state.trendMultiOpen));
+      $('trendMultiToggle').classList.toggle('active',custom);
+      $('trendMultiCount').textContent=custom?`(${selectedPairs.length} selected)`:'';
+      const grid=$('trendMultiGrid'),oldScroll=grid.scrollTop,selectedSet=new Set(selectedPairs);
+      grid.innerHTML=available.map(s=>{
+        const latest=s.points[s.points.length-1],checked=selectedSet.has(s.id);
+        return `<label class="trend-multi-choice ${checked?'chosen':''}"><input type="checkbox" data-trend-select="${s.id}" ${checked?'checked':''}><span class="trend-swatch" style="background:${s.color}"></span><span class="trend-multi-name">${esc(s.name)}${latest.governors<LOW_SAMPLE_GOVERNORS?'<small class="low-sample">Low sample</small>':''}</span><strong>${trade(latest.trade)}</strong></label>`;
+      }).join('') || '<span class="trend-multi-empty">No verified trade history is available in this period.</span>';
+      grid.scrollTop=oldScroll;
       const active=historyView(type,selectedIds).series.filter(s=>s.points.length);
       const allPoints=active.flatMap(s=>s.points),bounds=historyBounds(active,metric);
       const status=$('trendSummary'),svgRoot=$('trendGraphic'),legend=$('trendLegend'),foot=$('trendFoot');
       $('trendHint').textContent=focused
-        ?'Focused pairing · Hover over observations to see exact values. Choose another pair below, or click “Back to all pairings”.'
-        :state.trendView==='top5'
-          ?`Clear view: top ${Math.min(5,available.length)} of ${available.length} verified pairings by latest Trade %. Click any line or pairing below to focus; switch to All pairings to show every line.`
-          :`All ${available.length} verified pairings in the chart. Lines may overlap; click a line or pairing below to focus, or switch to Top 5 for a cleaner comparison.`;
+        ?(custom?'Focused pairing · Click “Back to selected pairs” to restore your multi-pair comparison.':'Focused pairing · Click “Back to all pairings” to return to the overview.')
+        :custom
+          ?`Custom comparison: ${active.length} of ${selectedPairs.length} selected pairings have history in this view. Open “Select multiple pairs” to add or remove lines.`
+          :state.trendView==='top5'
+            ?`Clear view: top ${Math.min(5,available.length)} of ${available.length} verified pairings. Click “Select multiple pairs” to compare any combination.`
+            :`All ${available.length} verified pairings. Use “Select multiple pairs” to compare your chosen combination.`;
       if(!bounds){
-        status.textContent=state.sync[type]==='loading'?`Loading ${days}-day history from GitHub…`:`No verified site-generated trade history in the last ${days} days.`;
+        status.textContent=custom&&!focused&&selectedPairs.length===0?'No pairs selected. Open “Select multiple pairs” to choose lines.':state.sync[type]==='loading'?`Loading ${days}-day history from GitHub…`:`No verified site-generated trade history in the last ${days} days for this selection.`;
         svgRoot.innerHTML='<div class="empty">No recorded 7-day Open Field trade snapshots are available for this selection.</div>';
         legend.replaceChildren();
         foot.textContent=`${days}-day rolling window · Site-generated timestamps only · No synthetic or archived 1-year values.`;
@@ -274,7 +317,7 @@
         status.innerHTML=`<span><strong>${esc(s.name)}</strong></span><span>First: <strong>${trade(first.trade)}</strong></span><span>Latest: <strong>${trade(last.trade)}</strong></span><span>Net change: <strong class="${deltaCls(delta)}">${deltaText(delta)}${delta===null?'':' pp'}</strong></span><span>${s.points.length} observed snapshots</span>`;
       }else{
         const positive=changes.find(s=>s.delta>0),negative=[...changes].reverse().find(s=>s.delta<0);
-        status.innerHTML=`<span><strong>${state.trendView==='top5'?`Top ${active.length} of ${available.length}`:`${active.length}`} pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
+        status.innerHTML=`<span><strong>${custom?`${active.length} selected`:state.trendView==='top5'?`Top ${active.length} of ${available.length}`:`${active.length}`} pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
       }
       const W=1050,H=390,left=82,right=34,top=25,bottom=67,pw=W-left-right,ph=H-top-bottom;
       const sx=x=>left+(x-bounds.xmin)/(bounds.xmax-bounds.xmin)*pw;
@@ -395,13 +438,50 @@
     async function discord(){const r=selected(),name=cfg[state.active].name,q=state.data[state.active];const valid=r.filter(x=>x.s),byDps=[...valid].sort((a,b)=>b.s.dps-a.s.dps).slice(0,3);const lines=[`**RoK Combat Lab — ${name} Trade Report**`,`**7 Days / Open Field** · ${valid.length}/${r.length} pairings`,`Site: ${generation(state.active)} · Checked: ${simpleDate(q.lastCheckedAtUTC)}`,'',...r.map((x,i)=>`${i+1}. **${pairName(x.id)}** — ${trade(x.s?.tradePercent)} | ${x.s?num(x.s.battles):'N/A'} reports | Δ ${deltaText(x.delta)==='N/A'?'N/A':deltaText(x.delta)+'pp'}`),'',`**Top DPS / Combat Statistics**`,...byDps.map(x=>`${pairName(x.id)}: DPS ${three(x.s.dps)} · SPS ${three(x.s.sps)} · TPS ${three(x.s.tps)} · KP ${kp(x.s.killPointsGained)}/${kp(x.s.killPointsLost)}`),'',`Source: https://rokbattles.com/combat-lab`,`Made by Vinc69cmAløT`];const text=lines.join('\n');try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);else throw Error('Clipboard API unavailable');toast(`${name} report copied for Discord.`);}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.append(ta);ta.select();const copied=document.execCommand('copy');ta.remove();toast(copied?'Discord report copied.':'Clipboard blocked by the browser. Use CSV export instead.');}}
     document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{state.active=btn.dataset.tab;state.query='';$('search').value='';render();}));
     $('search').addEventListener('input',e=>{state.query=e.target.value.trim().toLowerCase();render();});
-    $('trendView').addEventListener('change',e=>{if(!['top5','all'].includes(e.target.value))return;state.trendView=e.target.value;renderTrend();});
-    $('trendPair').addEventListener('change',e=>{state.trendPair[state.active]=e.target.value;renderTrend();});
+    $('trendView').addEventListener('change',e=>{
+      if(!['top5','all','custom'].includes(e.target.value))return;
+      state.trendView=e.target.value;state.trendPair[state.active]='all';
+      if(e.target.value==='custom'){
+        if(!state.trendSelected[state.active].length)state.trendSelected[state.active]=tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id);
+        state.trendMultiOpen=true;
+      }else state.trendMultiOpen=false;
+      renderTrend();
+    });
+    function setMultiSelection(ids){
+      const type=state.active,allowed=new Set(cfg[type].ids);
+      state.trendSelected[type]=[...new Set(ids)].filter(id=>allowed.has(id));
+      state.trendView='custom';state.trendPair[type]='all';state.trendMultiOpen=true;renderTrend();
+    }
+    $('trendMultiToggle').addEventListener('click',()=>{
+      if(state.trendMultiOpen){state.trendMultiOpen=false;renderTrend();return;}
+      if(state.trendView!=='custom'){
+        if(!state.trendSelected[state.active].length)state.trendSelected[state.active]=tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id);
+        state.trendView='custom';
+      }
+      state.trendPair[state.active]='all';state.trendMultiOpen=true;renderTrend();
+    });
+    $('trendMultiGrid').addEventListener('change',e=>{
+      const checkbox=e.target.closest('input[data-trend-select]');if(!checkbox)return;
+      const id=checkbox.dataset.trendSelect;
+      if(!cfg[state.active].ids.includes(id))return;
+      const checked=new Set(state.trendSelected[state.active]);
+      if(checkbox.checked)checked.add(id);else checked.delete(id);
+      setMultiSelection([...checked]);
+    });
+    $('trendSelectTop').addEventListener('click',()=>setMultiSelection(tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id)));
+    $('trendSelectAll').addEventListener('click',()=>setMultiSelection(tradeHistory(state.active).filter(s=>s.points.length).map(s=>s.id)));
+    $('trendClearSelection').addEventListener('click',()=>setMultiSelection([]));
+        $('trendPair').addEventListener('change',e=>{state.trendPair[state.active]=e.target.value;state.trendMultiOpen=false;renderTrend();});
     $('trendDays').addEventListener('change',e=>{const days=Number(e.target.value);if(!HISTORY_PERIODS.includes(days))return;state.trendDays=days;renderTrend();});
-    $('trendBack').addEventListener('click',()=>{state.trendPair[state.active]='all';state.query='';$('search').value='';render();});
+    $('trendBack').addEventListener('click',()=>{
+      const type=state.active,focused=state.trendPair[type]!=='all';
+      state.trendPair[type]='all';
+      if(!focused&&state.trendView==='custom'){state.trendView='top5';state.trendMultiOpen=false;}
+      state.query='';$('search').value='';render();
+    });
     $('trendMetric').addEventListener('change',e=>{state.trendMetric=e.target.value;renderTrend();});
-    $('trendLegend').addEventListener('click',e=>{const b=e.target.closest('button[data-trend-id]');if(b){state.trendPair[state.active]=b.dataset.trendId;renderTrend();}});
-    $('trendGraphic').addEventListener('click',e=>{const point=e.target.closest('[data-trend-id]');if(point){state.trendPair[state.active]=point.dataset.trendId;renderTrend();}});
+    $('trendLegend').addEventListener('click',e=>{const b=e.target.closest('button[data-trend-id]');if(b){state.trendPair[state.active]=b.dataset.trendId;state.trendMultiOpen=false;renderTrend();}});
+    $('trendGraphic').addEventListener('click',e=>{const point=e.target.closest('[data-trend-id]');if(point){state.trendPair[state.active]=point.dataset.trendId;state.trendMultiOpen=false;renderTrend();}});
     // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.
     // Screenshot creation requires a successful dataset fetch.
     function exportScreenshot(mode='report') {

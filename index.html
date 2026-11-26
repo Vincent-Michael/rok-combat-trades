@@ -44,43 +44,24 @@
     @media(max-width:610px){.trend-controls{width:100%;justify-content:stretch}.trend-select{flex:1;max-width:none;min-width:135px}.trend-card{padding:13px}.trend-legend{gap:5px 10px}.trend-summary{font-size:11px}}
 
 
-    /* Clear trade-history overview: a small number of readable lines, all pairings available for focus. */
-    .trend-hint{margin:0 0 12px;color:#a8bed7;font-size:12px;line-height:1.55}
-    .trend-back:not([disabled]){background:#75532c;border-color:#e4b46c;color:#fff4db;box-shadow:0 0 0 1px #e4b46c3d inset}
+    /* Direct click-to-toggle pairing selection. All checked at first load. */
+    .trend-hint{margin:0 0 11px;color:#bed3e9;font-size:12px;line-height:1.55}
+    .trend-back:not([disabled]){background:#75532c;border-color:#e4b46c;color:#fff4db}
     .trend-back:not([disabled]):hover{background:#976a32}
     .trend-back[disabled]{opacity:.60;cursor:default}
-    .trend-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:16px}
-    .trend-key{min-width:0;width:100%;display:flex;align-items:center;gap:10px;padding:9px 11px;background:#141f2f;border:1px solid #2e4058;border-radius:9px;opacity:.72}
-    .trend-key.plotted{background:#1b2b40;border-color:#4b6583;opacity:1}
-    .trend-key.active{border-color:#e5b465;background:#443625;color:#fff8ea;opacity:1}
-    .trend-key:hover{background:#2b3d56;color:white;opacity:1}
-    .trend-name{min-width:0;flex:1;font-size:11px;font-weight:650;line-height:1.4}
+    .trend-legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:9px 0 18px}
+    .trend-key{min-width:0;width:100%;display:flex;align-items:center;gap:8px;padding:9px 11px;background:#141f2f;border:1px solid #2e4058;border-radius:9px;opacity:.5;transition:opacity .13s,background .13s,border .13s}
+    .trend-key.selected{background:#1b2b40;border-color:#607b9c;opacity:1;color:#f2f7ff}
+    .trend-key:hover{background:#293c55;color:white;opacity:1}
+    .trend-key:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+    .trend-check{width:21px;height:21px;border:1px solid #71849f;border-radius:5px;flex-shrink:0;display:grid;place-items:center;font-size:14px;font-weight:800;color:#9eb0c8}
+    .trend-key.selected .trend-check{background:#d6a960;border-color:#ebc17d;color:#122031}
+    .trend-name{min-width:0;flex:1;font-size:11px;font-weight:650;line-height:1.4;text-align:left}
     .trend-latest{flex-shrink:0;color:#e9f2ff;font-size:12px;font-variant-numeric:tabular-nums}
+    .trend-key:not(.selected) .trend-latest{color:#93a4b9}
     .trend-plot [data-trend-id]{cursor:pointer}
     @media(max-width:720px){.trend-legend{grid-template-columns:1fr}.trend-key{padding:10px}.trend-controls{justify-content:flex-start}}
-    .trend-multi-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:38px;border:1px solid #637b99;background:#253b53;color:#f0f7ff;border-radius:9px;font-size:12px;font-weight:750;padding:7px 12px;white-space:nowrap;cursor:pointer}
-    .trend-multi-toggle:hover,.trend-multi-toggle.active{background:#443726;border-color:#e3b46b;color:#fff4d9}
-    .trend-multi-toggle:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-    #trendMultiCount{font-size:10px;font-weight:600;color:#f4c884}
-    .trend-multi-panel{border:1px solid #456080;background:#0f1b2b;border-radius:12px;padding:15px;margin-bottom:16px}
-    .trend-multi-panel[hidden]{display:none!important}
-    .trend-multi-head{display:flex;flex-direction:column;gap:4px;margin-bottom:11px}
-    .trend-multi-head strong{font-size:14px;color:#f2f6fc}
-    .trend-multi-head span{font-size:11px;color:#a7bacf}
-    .trend-multi-actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-    .trend-multi-actions button{background:#22344b;border:1px solid #4f6684;border-radius:8px;padding:7px 11px;color:#dbe9fb;font-size:11px;font-weight:700}
-    .trend-multi-actions button:hover,.trend-multi-actions button:focus-visible{background:#344f6d;outline-color:var(--gold)}
-    .trend-multi-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:310px;overflow:auto;scrollbar-color:#45617e #112035}
-    .trend-multi-choice{display:flex;align-items:center;gap:10px;min-width:0;padding:10px;background:#17283b;border:1px solid #304760;border-radius:9px;cursor:pointer;font-size:11px;color:#cfdaea}
-    .trend-multi-choice:hover{border-color:#6484a7;background:#1d344c}
-    .trend-multi-choice.chosen{border-color:#c49c64;background:#3a3027;color:#fff1d7}
-    .trend-multi-choice input{width:16px;height:16px;flex-shrink:0;accent-color:#e1b06a;cursor:pointer}
-    .trend-multi-choice .trend-multi-name{flex:1;min-width:0;line-height:1.4;font-weight:650}
-    .trend-multi-choice .trend-multi-name .low-sample{display:block;margin:2px 0 0}
-    .trend-multi-choice strong{white-space:nowrap;color:#f0f5ff;font-size:11px;font-variant-numeric:tabular-nums}
-    .trend-multi-empty{font-size:12px;color:#95a8c0}
-    @media(max-width:720px){.trend-multi-grid{grid-template-columns:1fr}.trend-multi-toggle{flex:1}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+        @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
     .capture-actions{display:flex;gap:5px;align-items:center}.capture-mode{border:1px solid #394a60;background:#19283a;color:#d9e3f1;border-radius:9px;min-height:39px;padding:0 8px;font-size:12px;font-weight:650;max-width:116px;cursor:pointer}.capture-button{border-color:#9a7440;background:#493824;color:#ffe4b3}.capture-button:hover{background:#675035}.capture-mode:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
     @media(max-width:610px){.capture-actions{flex:1 1 100%}.capture-mode{max-width:none;flex:1}.capture-button{flex:1}.capture-actions .action{flex:1}}
@@ -100,29 +81,24 @@
       <div class="statusline"><div id="monitorStatus" class="status warn"><span class="s-dot"></span><span>Loading verified statistics from GitHub…</span></div><div class="timestamps" id="times">Workflow checked: — · Site generated: —</div></div>
       <div class="kpi-row" aria-label="Statistics overview"><div class="kpi"><div class="kpi-label">Verified pairs</div><div class="kpi-value" id="kpiVerified">—</div><div class="kpi-sub" id="kpiVerifiedSub">Waiting for GitHub</div></div><div class="kpi"><div class="kpi-label">Best trade efficiency</div><div class="kpi-value green" id="kpiBest">—</div><div class="kpi-sub" id="kpiBestSub">Awaiting GitHub data</div></div><div class="kpi"><div class="kpi-label">Highest DPS</div><div class="kpi-value amber" id="kpiDps">—</div><div class="kpi-sub" id="kpiDpsSub">Awaiting GitHub data</div></div><div class="kpi"><div class="kpi-label">Largest report sample</div><div class="kpi-value" id="kpiReports">—</div><div class="kpi-sub" id="kpiReportsSub">Awaiting GitHub data</div></div></div>
       <section class="section" id="chartSection"><div class="section-head"><h2>Trade Efficiency Ranking</h2><div class="section-sub" id="chartSub">All verified commander pairings · Highest to lowest</div></div><div class="chart-card"><div class="legend"><span class="positive">Positive (&gt;100%)</span><span class="negative">Negative (&lt;100%)</span></div><div id="chartRows"></div><div class="chart-axis" id="chartAxis"></div><div class="chart-foot">Dashed line = 100% break-even · Latest verified site snapshot</div></div></section>
-      <section class="section" id="tradeTrendSection" aria-label="Trade history for the selected 7, 14 or 30 days">
-        <div class="section-head"><h2 id="trendHeading">Trade Efficiency — Last 7 Days</h2><div class="trend-controls">
-          <button type="button" class="trend-back" id="trendBack" aria-label="Back to all commander pairings" disabled>← Back to all pairings</button>
-          <label class="trend-guide" for="trendView">Overview</label><select class="trend-select" id="trendView" aria-label="Number of pairing lines to display"><option value="top5" selected>Top 5 (clear view)</option><option value="all">All pairings</option><option value="custom">Custom selection</option></select>
-          <label class="trend-guide" for="trendPair">Pairing</label><select class="trend-select" id="trendPair" aria-label="Commander pairing in trade history"><option value="all">All pairings</option></select>
-          <button type="button" class="trend-multi-toggle" id="trendMultiToggle" aria-controls="trendMultiPanel" aria-expanded="false">☑ Select multiple pairs <span id="trendMultiCount"></span></button>
-          <label class="trend-guide" for="trendDays">Compare</label><select class="trend-select" id="trendDays" aria-label="Trade history comparison period"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
-          <label class="trend-guide" for="trendMetric">Show</label><select class="trend-select" id="trendMetric" aria-label="Trade history measurement"><option value="trade">Trade %</option><option value="delta">Change (Δ pp)</option></select>
-        </div></div>
-        <div class="trend-card">
-          <div class="trend-multi-panel" id="trendMultiPanel" hidden>
-            <div class="trend-multi-head"><strong>Choose pairs to compare</strong><span>Select several pairings to show their lines together in Trade Efficiency and PNG exports.</span></div>
-            <div class="trend-multi-actions"><button type="button" id="trendSelectTop">Select Top 5</button><button type="button" id="trendSelectAll">Select all</button><button type="button" id="trendClearSelection">Clear selection</button></div>
-            <div class="trend-multi-grid" id="trendMultiGrid" role="group" aria-label="Select multiple commander pairings"></div>
+      <section class="section" id="tradeTrendSection" aria-label="Trade Efficiency history for the selected 7, 14 or 30 days">
+        <div class="section-head">
+          <h2 id="trendHeading">Trade Efficiency — Last 7 Days</h2>
+          <div class="trend-controls">
+            <button type="button" class="trend-back" id="trendBack" aria-label="Select all commander pairings" disabled>↺ Select all pairs</button>
+            <label class="trend-guide" for="trendDays">Compare</label><select class="trend-select" id="trendDays" aria-label="Trade history comparison period"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
+            <label class="trend-guide" for="trendMetric">Show</label><select class="trend-select" id="trendMetric" aria-label="Trade history measurement"><option value="trade">Trade %</option><option value="delta">Change (Δ pp)</option></select>
           </div>
-          <div class="trend-summary" id="trendSummary" role="status">Loading the 7-day trade history from GitHub…</div>
-          <p class="trend-hint" id="trendHint">Top 5 overview · Choose a pairing below to zoom in; use Back to all pairings to return.</p>
+        </div>
+        <div class="trend-card">
+          <p class="trend-hint" id="trendHint">All pairings are selected. Click any pairing below to hide or show its line.</p>
+          <div class="trend-legend" id="trendLegend" role="group" aria-label="Select pairings to display"></div>
+          <div class="trend-summary" id="trendSummary" role="status">Loading 7-day trade history from GitHub…</div>
           <div class="trend-scroller" id="trendGraphic"><div class="empty">Loading recorded site snapshots…</div></div>
-          <div class="trend-legend" id="trendLegend"></div>
-          <p class="trend-foot" id="trendFoot">7-day rolling window · 7-day Open Field snapshots. Data points are actual RoK Battles site generations from the GitHub monitor history; no missing days are invented.</p>
+          <p class="trend-foot" id="trendFoot">7-day rolling window · 7-day Open Field snapshots. Each point comes from RoK Battles site generations recorded in GitHub.</p>
         </div>
       </section>
-      <section class="section"><div class="section-head"><h2>Trade Ranking &amp; Battle Reports</h2><div class="section-sub" id="rankingSub">Trade = KP gained ÷ KP lost × 100</div></div><div class="table-box"><table class="data-table" id="rankingTable"><thead><tr><th>Rank</th><th>Commander Pairing</th><th class="num">Trade %</th><th class="num">Δ pp</th><th class="num">Reports</th></tr></thead><tbody id="rankingRows"></tbody></table></div><p class="table-note">Δ pp compares distinct verified 7-day Open Field snapshots only. N/A means no earlier valid distinct snapshot.</p></section>
+            <section class="section"><div class="section-head"><h2>Trade Ranking &amp; Battle Reports</h2><div class="section-sub" id="rankingSub">Trade = KP gained ÷ KP lost × 100</div></div><div class="table-box"><table class="data-table" id="rankingTable"><thead><tr><th>Rank</th><th>Commander Pairing</th><th class="num">Trade %</th><th class="num">Δ pp</th><th class="num">Reports</th></tr></thead><tbody id="rankingRows"></tbody></table></div><p class="table-note">Δ pp compares distinct verified 7-day Open Field snapshots only. N/A means no earlier valid distinct snapshot.</p></section>
       <section class="section"><div class="section-head"><h2>Detailed Combat Statistics</h2><div class="section-sub">Same rank order · KP = Kill Points</div></div><div class="table-box"><table class="data-table" id="metricsTable"><thead><tr><th>Commander Pairing</th><th class="num">KP Gained</th><th class="num">KP Lost</th><th class="num">DPS</th><th class="num">SPS</th><th class="num">TPS</th></tr></thead><tbody id="metricRows"></tbody></table></div><p class="table-note">KP presented in billions (B) or millions (M); hover to see exact values. DPS / SPS / TPS sourced from the verified monitor, not estimated.</p></section>
       <section class="section"><div class="section-head"><h2>Key Findings</h2><div class="section-sub">Directional insights &amp; sample quality</div></div><div class="insights" id="findings"></div><div class="sourcebox"><div id="sourceStatus">Source / monitor status</div><div class="source-links" id="sourceLinks"></div></div></section>
     </section>
@@ -145,7 +121,7 @@
       arch:{name:'Archer',ids:['509-6','509-179','611-179','611-6','611-187','187-179','187-611','179-187','179-459','187-186'],file:'data/trades_archer.json',report:'REPORT_ARCHER.md'}
     };
     const emptyStore=()=>({scenario:'7d/openField',snapshots:{},history:[],lastCheckedAtUTC:null,lastRunSuccessCount:null,lastErrors:{}});
-    const state={active:'inf',query:'',trendPair:{inf:'all',cav:'all',arch:'all'},trendMetric:'trade',trendDays:7,trendView:'top5',trendSelected:{inf:[],cav:[],arch:[]},trendMultiOpen:false,data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
+    const state={active:'inf',query:'',trendMetric:'trade',trendDays:7,trendSelected:{inf:null,cav:null,arch:null},data:{inf:emptyStore(),cav:emptyStore(),arch:emptyStore()},sync:{inf:'loading',cav:'loading',arch:'loading'},syncError:{inf:null,cav:null,arch:null}};
     const $=id=>document.getElementById(id);
     const fmt=new Intl.NumberFormat('en-US');
     const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -238,14 +214,15 @@
     }
     const historyDate=time=>new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',timeZone:'UTC'}).format(new Date(time));
     const historyStamp=time=>new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'UTC'}).format(new Date(time))+' UTC';
-    function historyView(type=state.active,allowedIds=null){
-      const all=tradeHistory(type),visible=allowedIds?all.filter(s=>allowedIds.includes(s.id)):all;
-      const pair=state.trendPair[type];
-      const ranked=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
-      const overview=state.trendView==='custom'?visible.filter(s=>state.trendSelected[type].includes(s.id)):state.trendView==='top5'?ranked.slice(0,5):visible;
-      return{series:pair==='all'?overview:visible.filter(s=>s.id===pair),all,visible,metric:state.trendMetric};
+    function historyView(type=state.active){
+      const all=tradeHistory(type);
+      // null means ALL pairings are selected, including newly monitored pair IDs.
+      const explicit=state.trendSelected[type];
+      const selected=explicit===null?all:new Set(explicit);
+      const series=explicit===null?all:all.filter(s=>selected.has(s.id));
+      return{series,all,metric:state.trendMetric};
     }
-    function historyBounds(series,metric){
+        function historyBounds(series,metric){
       const points=series.flatMap(s=>s.points.map(p=>({time:p.time,value:metric==='delta'?p.trade-s.baseline:p.trade})));
       if(!points.length)return null;
       const times=points.map(p=>p.time),values=points.map(p=>p.value);
@@ -264,47 +241,38 @@
       return{xmin,xmax,ymin,ymax,points};
     }
     function renderTrend(){
-      const type=state.active,selectedIds=selected().map(r=>r.id),data=historyView(type,selectedIds),{series,metric,visible}=data;
-      const pairInput=$('trendPair'),selectedValue=state.trendPair[type],days=state.trendDays;
+      const type=state.active,days=state.trendDays,{series,all,metric}=historyView(type);
       $('trendHeading').textContent=`Trade Efficiency — Last ${days} Days`;
-      $('trendDays').value=String(days);
+      $('trendDays').value=String(days);$('trendMetric').value=metric;
       $('trendScreenshotOption').textContent=`${days}-day trend`;
-      // The search box also limits the selectable trend pairings, without changing their stored history.
-      const candidates=rows(type).filter(r=>selectedIds.includes(r.id));
-      pairInput.innerHTML=`<option value="all">Overview (${candidates.length} pairings)</option>`+candidates.map(r=>`<option value="${r.id}">${esc(pairName(r.id))}</option>`).join('');
-      if(selectedValue!=='all'&&!selectedIds.includes(selectedValue)){state.trendPair[type]='all';}
-      pairInput.value=state.trendPair[type];$('trendMetric').value=metric;
-      const focused=state.trendPair[type]!=='all',custom=state.trendView==='custom';
-      const available=visible.filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade);
-      const selectedPairs=state.trendSelected[type];
-      $('trendBack').disabled=!focused&&!custom;
-      $('trendBack').textContent=focused?(custom?'← Back to selected pairs':'← Back to all pairings'):(custom?'← Back to Top 5':'← Back to all pairings');
-      $('trendView').value=state.trendView;$('trendView').disabled=focused;
-      $('trendMultiPanel').hidden=!state.trendMultiOpen;
-      $('trendMultiToggle').setAttribute('aria-expanded',String(state.trendMultiOpen));
-      $('trendMultiToggle').classList.toggle('active',custom);
-      $('trendMultiCount').textContent=custom?`(${selectedPairs.length} selected)`:'';
-      const grid=$('trendMultiGrid'),oldScroll=grid.scrollTop,selectedSet=new Set(selectedPairs);
-      grid.innerHTML=available.map(s=>{
-        const latest=s.points[s.points.length-1],checked=selectedSet.has(s.id);
-        return `<label class="trend-multi-choice ${checked?'chosen':''}"><input type="checkbox" data-trend-select="${s.id}" ${checked?'checked':''}><span class="trend-swatch" style="background:${s.color}"></span><span class="trend-multi-name">${esc(s.name)}${latest.governors<LOW_SAMPLE_GOVERNORS?'<small class="low-sample">Low sample</small>':''}</span><strong>${trade(latest.trade)}</strong></label>`;
-      }).join('') || '<span class="trend-multi-empty">No verified trade history is available in this period.</span>';
-      grid.scrollTop=oldScroll;
-      const active=historyView(type,selectedIds).series.filter(s=>s.points.length);
+      const explicitlySelected=state.trendSelected[type];
+      const selectedIds=explicitlySelected===null?new Set(all.map(s=>s.id)):new Set(explicitlySelected);
+      const available=[...all].sort((a,b)=>{
+        const av=a.points.length?a.points[a.points.length-1].trade:-Infinity;
+        const bv=b.points.length?b.points[b.points.length-1].trade:-Infinity;
+        return bv-av;
+      });
+      const selectedCount=all.filter(s=>selectedIds.has(s.id)).length;
+      const active=series.filter(s=>s.points.length);
       const allPoints=active.flatMap(s=>s.points),bounds=historyBounds(active,metric);
       const status=$('trendSummary'),svgRoot=$('trendGraphic'),legend=$('trendLegend'),foot=$('trendFoot');
-      $('trendHint').textContent=focused
-        ?(custom?'Focused pairing · Click “Back to selected pairs” to restore your multi-pair comparison.':'Focused pairing · Click “Back to all pairings” to return to the overview.')
-        :custom
-          ?`Custom comparison: ${active.length} of ${selectedPairs.length} selected pairings have history in this view. Open “Select multiple pairs” to add or remove lines.`
-          :state.trendView==='top5'
-            ?`Clear view: top ${Math.min(5,available.length)} of ${available.length} verified pairings. Click “Select multiple pairs” to compare any combination.`
-            :`All ${available.length} verified pairings. Use “Select multiple pairs” to compare your chosen combination.`;
+      $('trendBack').disabled=selectedCount===all.length;
+      $('trendHint').textContent=`${selectedCount} of ${all.length} pairings selected · Click a pairing to hide or show its line. Use “Select all pairs” to restore everything.`;
+      // Buttons, not checkboxes: every click toggles just that single pairing.
+      // Keep the entire list visible even if nothing is currently selected.
+      legend.innerHTML=available.map(s=>{
+        const on=selectedIds.has(s.id),latest=s.points[s.points.length-1];
+        return `<button type="button" class="trend-key ${on?'selected':''}" data-trend-id="${s.id}" aria-pressed="${on}" aria-label="${esc(s.name)}, ${on?'shown':'hidden'}; click to ${on?'hide':'show'}">
+          <span class="trend-check" aria-hidden="true">${on?'✓':'+'}</span>
+          <span class="trend-swatch" style="background:${s.color}"></span>
+          <span class="trend-name">${esc(s.name)}${latest&&latest.governors<LOW_SAMPLE_GOVERNORS?'<span class="low-sample">Low sample</span>':''}</span>
+          <strong class="trend-latest">${latest?trade(latest.trade):'N/A'}</strong>
+        </button>`;
+      }).join('');
       if(!bounds){
-        status.textContent=custom&&!focused&&selectedPairs.length===0?'No pairs selected. Open “Select multiple pairs” to choose lines.':state.sync[type]==='loading'?`Loading ${days}-day history from GitHub…`:`No verified site-generated trade history in the last ${days} days for this selection.`;
-        svgRoot.innerHTML='<div class="empty">No recorded 7-day Open Field trade snapshots are available for this selection.</div>';
-        legend.replaceChildren();
-        foot.textContent=`${days}-day rolling window · Site-generated timestamps only · No synthetic or archived 1-year values.`;
+        status.textContent=state.sync[type]==='loading'?`Loading ${days}-day history from GitHub…`:selectedCount===0?'No pairings selected. Click any pairing above to show its history.':`No verified site-generated trade history for the selected pairings in the last ${days} days.`;
+        svgRoot.innerHTML='<div class="empty">No lines to display. Select one or more commander pairings above.</div>';
+        foot.textContent=`Rolling ${days}-day window · Actual 7-day Open Field site generations only · No synthetic observations.`;
         return;
       }
       const oldest=Math.min(...allPoints.map(p=>p.time)),newest=Math.max(...allPoints.map(p=>p.time));
@@ -313,11 +281,10 @@
       const changes=active.filter(s=>s.delta!==null).sort((a,b)=>b.delta-a.delta);
       if(active.length===1){
         const s=active[0],first=s.points[0],last=s.points[s.points.length-1];
-        const delta=s.delta;
-        status.innerHTML=`<span><strong>${esc(s.name)}</strong></span><span>First: <strong>${trade(first.trade)}</strong></span><span>Latest: <strong>${trade(last.trade)}</strong></span><span>Net change: <strong class="${deltaCls(delta)}">${deltaText(delta)}${delta===null?'':' pp'}</strong></span><span>${s.points.length} observed snapshots</span>`;
+        status.innerHTML=`<span><strong>${esc(s.name)}</strong></span><span>First: <strong>${trade(first.trade)}</strong></span><span>Latest: <strong>${trade(last.trade)}</strong></span><span>Net change: <strong class="${deltaCls(s.delta)}">${deltaText(s.delta)}${s.delta===null?'':' pp'}</strong></span><span>${s.points.length} observed snapshots</span>`;
       }else{
         const positive=changes.find(s=>s.delta>0),negative=[...changes].reverse().find(s=>s.delta<0);
-        status.innerHTML=`<span><strong>${custom?`${active.length} selected`:state.trendView==='top5'?`Top ${active.length} of ${available.length}`:`${active.length}`} pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
+        status.innerHTML=`<span><strong>${active.length} plotted pairings</strong> · ${distinct} site generations</span><span>Available coverage: <strong>${coverage.toFixed(1)} days</strong> of the last ${days}</span>`+(positive?`<span>Largest gain: <strong class="pos">${esc(positive.name)} ${deltaText(positive.delta)} pp</strong></span>`:'')+(negative?`<span>Largest loss: <strong class="neg">${esc(negative.name)} ${deltaText(negative.delta)} pp</strong></span>`:'');
       }
       const W=1050,H=390,left=82,right=34,top=25,bottom=67,pw=W-left-right,ph=H-top-bottom;
       const sx=x=>left+(x-bounds.xmin)/(bounds.xmax-bounds.xmin)*pw;
@@ -344,21 +311,16 @@
           path+=`${lastTime!==null&&p.time-lastTime<=36*60*60*1000?'L':'M'}${x.toFixed(2)},${y.toFixed(2)} `;
           lastTime=p.time;
         }
-        svg+=`<path d="${path.trim()}" stroke="${s.color}" stroke-width="${active.length===1?3.7:2.5}" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="1"/><path d="${path.trim()}" data-trend-id="${s.id}" stroke="transparent" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><title>Click to focus ${esc(s.name)}</title></path>`;
+        svg+=`<path d="${path.trim()}" stroke="${s.color}" stroke-width="${active.length===1?3.7:2.5}" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="1"/><path d="${path.trim()}" data-trend-id="${s.id}" stroke="transparent" stroke-width="16" fill="none" stroke-linecap="round" stroke-linejoin="round"><title>Click to hide ${esc(s.name)} from the graph</title></path>`;
         for(const p of s.points){const v=metric==='delta'?p.trade-s.baseline:p.trade;
           svg+=`<circle data-trend-id="${s.id}" cx="${sx(p.time).toFixed(2)}" cy="${sy(v).toFixed(2)}" r="${active.length===1?5.0:3.8}" fill="${s.color}" stroke="#162337" stroke-width="1.3"><title>${esc(s.name)} · ${historyStamp(p.time)} · ${trade(p.trade)} · Δ ${deltaText(p.trade-s.baseline)} pp · ${num(p.reports)} reports</title></circle>`;}
       }
       svg+=`<text x="${left}" y="${H-6}" fill="#8296b2" font-size="11">Site-generated timestamps (UTC) · Actual observations only</text></svg>`;
       svgRoot.innerHTML=svg;
-      const visibleIds=new Set(active.map(s=>s.id));
-      legend.innerHTML=available.map(s=>{
-        const latest=s.points[s.points.length-1],isFocused=state.trendPair[type]===s.id,plotted=visibleIds.has(s.id);
-        return `<button type="button" class="trend-key ${plotted?'plotted':''} ${isFocused?'active':''}" aria-pressed="${isFocused}" data-trend-id="${s.id}" title="Focus on ${esc(s.name)}"><span class="trend-swatch" style="background:${s.color}"></span><span class="trend-name">${esc(s.name)}${latest.governors<LOW_SAMPLE_GOVERNORS?'<span class="low-sample">Low sample</span>':''}</span><strong class="trend-latest">${trade(latest.trade)}</strong></button>`;
-      }).join('');
       foot.textContent=`Rolling ${days}-day filter · Recorded ${historyStamp(oldest)} to ${historyStamp(newest)} (${coverage.toFixed(1)} days of available history). Lines stop when observations are more than 36h apart. ${metric==='delta'?'Change is measured in percentage points relative to the first recorded observation for each pair.':'Trade efficiency = KP gained ÷ KP lost × 100.'} Each point represents a rolling 7-day Open Field sample, not a cumulative ${days}-day report. No earlier or missing observations are invented.`;
     }
 
-    function renderStatus(){
+        function renderStatus(){
       const type=state.active,q=state.data[type],sync=state.sync[type],s=$('monitorStatus');
       const loaded=Object.keys(q.snapshots||{}).length>0;
       s.className=`status ${sync==='github'?'good':'warn'}`;
@@ -438,51 +400,23 @@
     async function discord(){const r=selected(),name=cfg[state.active].name,q=state.data[state.active];const valid=r.filter(x=>x.s),byDps=[...valid].sort((a,b)=>b.s.dps-a.s.dps).slice(0,3);const lines=[`**RoK Combat Lab — ${name} Trade Report**`,`**7 Days / Open Field** · ${valid.length}/${r.length} pairings`,`Site: ${generation(state.active)} · Checked: ${simpleDate(q.lastCheckedAtUTC)}`,'',...r.map((x,i)=>`${i+1}. **${pairName(x.id)}** — ${trade(x.s?.tradePercent)} | ${x.s?num(x.s.battles):'N/A'} reports | Δ ${deltaText(x.delta)==='N/A'?'N/A':deltaText(x.delta)+'pp'}`),'',`**Top DPS / Combat Statistics**`,...byDps.map(x=>`${pairName(x.id)}: DPS ${three(x.s.dps)} · SPS ${three(x.s.sps)} · TPS ${three(x.s.tps)} · KP ${kp(x.s.killPointsGained)}/${kp(x.s.killPointsLost)}`),'',`Source: https://rokbattles.com/combat-lab`,`Made by Vinc69cmAløT`];const text=lines.join('\n');try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(text);else throw Error('Clipboard API unavailable');toast(`${name} report copied for Discord.`);}catch(e){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.append(ta);ta.select();const copied=document.execCommand('copy');ta.remove();toast(copied?'Discord report copied.':'Clipboard blocked by the browser. Use CSV export instead.');}}
     document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{state.active=btn.dataset.tab;state.query='';$('search').value='';render();}));
     $('search').addEventListener('input',e=>{state.query=e.target.value.trim().toLowerCase();render();});
-    $('trendView').addEventListener('change',e=>{
-      if(!['top5','all','custom'].includes(e.target.value))return;
-      state.trendView=e.target.value;state.trendPair[state.active]='all';
-      if(e.target.value==='custom'){
-        if(!state.trendSelected[state.active].length)state.trendSelected[state.active]=tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id);
-        state.trendMultiOpen=true;
-      }else state.trendMultiOpen=false;
+    function toggleTrendPair(id){
+      const type=state.active;
+      if(!cfg[type].ids.includes(id))return;
+      // Preserve current selection per troop type; null = all selected.
+      const selected=new Set(state.trendSelected[type]===null?cfg[type].ids:state.trendSelected[type]);
+      if(selected.has(id))selected.delete(id);else selected.add(id);
+      state.trendSelected[type]=cfg[type].ids.filter(pairId=>selected.has(pairId));
+      // If every pair is reselected, revert to automatic all-selection mode.
+      if(state.trendSelected[type].length===cfg[type].ids.length)state.trendSelected[type]=null;
       renderTrend();
-    });
-    function setMultiSelection(ids){
-      const type=state.active,allowed=new Set(cfg[type].ids);
-      state.trendSelected[type]=[...new Set(ids)].filter(id=>allowed.has(id));
-      state.trendView='custom';state.trendPair[type]='all';state.trendMultiOpen=true;renderTrend();
     }
-    $('trendMultiToggle').addEventListener('click',()=>{
-      if(state.trendMultiOpen){state.trendMultiOpen=false;renderTrend();return;}
-      if(state.trendView!=='custom'){
-        if(!state.trendSelected[state.active].length)state.trendSelected[state.active]=tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id);
-        state.trendView='custom';
-      }
-      state.trendPair[state.active]='all';state.trendMultiOpen=true;renderTrend();
-    });
-    $('trendMultiGrid').addEventListener('change',e=>{
-      const checkbox=e.target.closest('input[data-trend-select]');if(!checkbox)return;
-      const id=checkbox.dataset.trendSelect;
-      if(!cfg[state.active].ids.includes(id))return;
-      const checked=new Set(state.trendSelected[state.active]);
-      if(checkbox.checked)checked.add(id);else checked.delete(id);
-      setMultiSelection([...checked]);
-    });
-    $('trendSelectTop').addEventListener('click',()=>setMultiSelection(tradeHistory(state.active).filter(s=>s.points.length).sort((a,b)=>b.points[b.points.length-1].trade-a.points[a.points.length-1].trade).slice(0,5).map(s=>s.id)));
-    $('trendSelectAll').addEventListener('click',()=>setMultiSelection(tradeHistory(state.active).filter(s=>s.points.length).map(s=>s.id)));
-    $('trendClearSelection').addEventListener('click',()=>setMultiSelection([]));
-        $('trendPair').addEventListener('change',e=>{state.trendPair[state.active]=e.target.value;state.trendMultiOpen=false;renderTrend();});
     $('trendDays').addEventListener('change',e=>{const days=Number(e.target.value);if(!HISTORY_PERIODS.includes(days))return;state.trendDays=days;renderTrend();});
-    $('trendBack').addEventListener('click',()=>{
-      const type=state.active,focused=state.trendPair[type]!=='all';
-      state.trendPair[type]='all';
-      if(!focused&&state.trendView==='custom'){state.trendView='top5';state.trendMultiOpen=false;}
-      state.query='';$('search').value='';render();
-    });
     $('trendMetric').addEventListener('change',e=>{state.trendMetric=e.target.value;renderTrend();});
-    $('trendLegend').addEventListener('click',e=>{const b=e.target.closest('button[data-trend-id]');if(b){state.trendPair[state.active]=b.dataset.trendId;state.trendMultiOpen=false;renderTrend();}});
-    $('trendGraphic').addEventListener('click',e=>{const point=e.target.closest('[data-trend-id]');if(point){state.trendPair[state.active]=point.dataset.trendId;state.trendMultiOpen=false;renderTrend();}});
-    // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.
+    $('trendBack').addEventListener('click',()=>{state.trendSelected[state.active]=null;renderTrend();});
+    $('trendLegend').addEventListener('click',e=>{const item=e.target.closest('button[data-trend-id]');if(item)toggleTrendPair(item.dataset.trendId);});
+    $('trendGraphic').addEventListener('click',e=>{const line=e.target.closest('[data-trend-id]');if(line)toggleTrendPair(line.dataset.trendId);});
+        // Dependency-free PNG exporter uses only data retrieved from GitHub in this session.
     // Screenshot creation requires a successful dataset fetch.
     function exportScreenshot(mode='report') {
       const type=state.active, items=selected(), all=rows(type), name=cfg[type].name;
@@ -591,7 +525,7 @@
         return y+panelH+48;
       }
       function drawTradeTrend(y){
-        const model=historyView(type,items.map(r=>r.id)),valid=model.series.filter(s=>s.points.length),metric=model.metric;
+        const model=historyView(type),valid=model.series.filter(s=>s.points.length),metric=model.metric;
         y=sectionHead(`Trade Efficiency — Last ${state.trendDays} Days`,y,`${model.series.length} pairing(s) · ${metric==='trade'?'Trade %':'Change (Δ pp)'}`);
         const panelH=valid.length>1?Math.max(560,450+Math.ceil(valid.length/2)*24):448,panelY=y,x=margin,w=contentW;
         rect(x,panelY,w,panelH,17,P.chart,P.stroke);
